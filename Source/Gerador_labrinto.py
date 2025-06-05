@@ -9,3 +9,4 @@ def teste1():
     print("Oi mundo")
 def teste2():
     print("Hello World")
+    #atualizacao por Rafael
