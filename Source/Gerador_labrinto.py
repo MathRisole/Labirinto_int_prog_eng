@@ -4,3 +4,8 @@ import random as r    #Para gerar numeros aleatorios, embaralhar listas, etc
 import datetime       #Para registrar tempos
 import os             #Gerenciamento de arquivos/diretorios
 import pathlib        #Gerenciamento de arquivos/diretorios
+
+def teste1():
+    print("Oi mundo")
+def teste2():
+    print("Hello World")
