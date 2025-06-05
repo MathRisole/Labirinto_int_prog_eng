@@ -7,5 +7,6 @@ import pathlib        #Gerenciamento de arquivos/diretorios
 
 def teste1():
     print("Oi mundo")
+    print("teste 2 e meu ovo")
 def teste2():
     print("Hello World")
