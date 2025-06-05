@@ -10,3 +10,4 @@ def teste1():
     print("teste 2 e meu ovo")
 def teste2():
     print("Hello World")
+    #atualizacao por Rafael
