@@ -34,18 +34,18 @@ class Labirinto:
         return self.matriz
     
 
-    def verificar_direcao(self, diereita, esquerda, baixo , cima): #passar os 4 pontos diretamente adjacentes ao ponto atual
+    def verificar_direcao(self, direita, esquerda, baixo , cima): #passar os 4 pontos diretamente adjacentes ao ponto atual
         #verificar se ao redor do ponto só existem dois caminhos 
-        livres = 0
-        if diereita == ".":
-            livres += 1
+        ocupados = 0
+        if direita == ".":
+            ocupados += 1
         if esquerda == ".":     
-            livres += 1 
+            ocupados == 1 
         if baixo == ".":
-            livres += 1
+            ocupados += 1
         if cima == ".":
-            livres += 1
-        return livres <= 2
+            ocupados += 1
+        return ocupados <= 1
     
     def __init__(self, largura, altura):
         #atributos do labirinto:
@@ -60,6 +60,8 @@ class Labirinto:
 
 
     def gerar_caminho_aleatorio(self, largura, altura):
+        #tratando erro de loop, APAGAR DEPOIS
+        contador = 0
         #começar em ponto aleatorio
         x = 1
         y = altura//2
@@ -67,23 +69,36 @@ class Labirinto:
         self.matriz[y][1] = "."
         tamanho = r.randint(1, (largura * altura) // 6)
         i=0
-        while i < 10:
+        while i < tamanho:
             direcao = self.gerar_direcao()  #verificar se a direcao é valida. não é uma parede e nem ligada a dois caminhos
-            if direcao == "cima" and y > 1 and self.verificar_direcao(self.matriz[y][x], self.matriz[y][x - 1], self.matriz[y + 1][x], self.matriz[y - 1][x - 1]) and (y+1) == " ":
-                y -= 1
-                i+=1
-            elif direcao == "baixo" and y < altura - 2 and self.verificar_direcao(self.matriz[y][x], self.matriz[y][x + 1], self.matriz[y + 1][x], self.matriz[y - 1][x]) and (y-1) == " ":
+            if direcao == "cima":
                 y += 1
-                i+=1
-            elif direcao == "esquerda" and x >= 1 and self.verificar_direcao(self.matriz[y][x - 1], self.matriz[y][x + 1], self.matriz[y + 1][x], self.matriz[y - 1][x]) and (x-1) == " ":
+                if y < altura - 2 and self.verificar_direcao(self.matriz[y][x+1], self.matriz[y][x - 1], self.matriz[y - 1][x], self.matriz[y + 1][x]) and self.matriz[y][x] == " ":
+                    i+=1
+                    print(f"Direção: {direcao}, Posição: ({x}, {y})")
+                else:
+                    y -= 1
+            elif direcao == "baixo":
+                y -= 1
+                if y > 0 and self.verificar_direcao(self.matriz[y][x+1], self.matriz[y][x - 1], self.matriz[y - 1][x], self.matriz[y + 1][x]) and self.matriz[y][x] == " ":
+                    i+=1
+                    print(f"Direção: {direcao}, Posição: ({x}, {y})")
+                else:
+                    y += 1
+            elif direcao == "esquerda":
                 x -= 1
-                i+=1
-            elif direcao == "direita" and x <= largura - 2 and self.verificar_direcao(self.matriz[y][x + 1], self.matriz[y][x - 1], self.matriz[y + 1][x], self.matriz[y - 1][x]) and (x+1) == " ":
+                if x > 1 and self.verificar_direcao(self.matriz[y][x + 1], self.matriz[y][x - 1], self.matriz[y - 1][x], self.matriz[y + 1][x]) and self.matriz[y][x] == " ":
+                    i+=1
+                    print(f"Direção: {direcao}, Posição: ({x}, {y})")
+                else:
+                    x += 1
+            elif direcao == "direita":
                 x += 1
-                i+=1
-            else:
-                direcao = "deu merda"
-            print(f"Direção: {direcao}, Posição: ({x}, {y})")
+                if x <= largura - 2 and self.verificar_direcao(self.matriz[y][x + 1], self.matriz[y][x - 1], self.matriz[y - 1][x], self.matriz[y + 1][x]) and self.matriz[y][x] == " ":
+                    i+=1
+                    print(f"Direção: {direcao}, Posição: ({x}, {y})")
+                else:
+                    x -= 1
             self.matriz[y][x] = "."
         self.matriz[y][x] = "S"
         return self.matriz            
