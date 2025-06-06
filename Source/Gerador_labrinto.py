@@ -61,31 +61,30 @@ class Labirinto:
 
     def gerar_caminho_aleatorio(self, largura, altura):
         #começar em ponto aleatorio
-        x = 2
+        x = 1
         y = altura//2
         self.matriz[y][0] = "E"
         self.matriz[y][1] = "."
         tamanho = r.randint(1, (largura * altura) // 6)
-        i =0
-        while i <= 1:
-            direcao = self.gerar_direcao()#verificar se a direcao é valida. não é uma parede e nem ligada a dois caminhos
-            if i == 0:
-                x += 1
-                i+=1
-            elif direcao == "cima" and y > 1 and self.verificar_direcao(self.matriz[y][x], self.matriz[y][x - 1], self.matriz[y + 1][x], self.matriz[y - 1][x - 1]) and self.matriz[y][x] == " ":
+        i=0
+        while i < 10:
+            direcao = self.gerar_direcao()  #verificar se a direcao é valida. não é uma parede e nem ligada a dois caminhos
+            if direcao == "cima" and y > 1 and self.verificar_direcao(self.matriz[y][x], self.matriz[y][x - 1], self.matriz[y + 1][x], self.matriz[y - 1][x - 1]) and (y+1) == " ":
                 y -= 1
                 i+=1
-            elif direcao == "baixo" and y < altura - 2 and self.verificar_direcao(self.matriz[y][x], self.matriz[y][x + 1], self.matriz[y + 1][x], self.matriz[y - 1][x]) and self.matriz[y][x] == " ":
+            elif direcao == "baixo" and y < altura - 2 and self.verificar_direcao(self.matriz[y][x], self.matriz[y][x + 1], self.matriz[y + 1][x], self.matriz[y - 1][x]) and (y-1) == " ":
                 y += 1
                 i+=1
-            elif direcao == "esquerda" and x >= 1 and self.verificar_direcao(self.matriz[y][x - 1], self.matriz[y][x + 1], self.matriz[y + 1][x], self.matriz[y - 1][x]) and self.matriz[y][x] == " ":
+            elif direcao == "esquerda" and x >= 1 and self.verificar_direcao(self.matriz[y][x - 1], self.matriz[y][x + 1], self.matriz[y + 1][x], self.matriz[y - 1][x]) and (x-1) == " ":
                 x -= 1
                 i+=1
-            elif direcao == "direita" and x <= largura - 2 and self.verificar_direcao(self.matriz[y][x + 1], self.matriz[y][x - 1], self.matriz[y + 1][x], self.matriz[y - 1][x]) and self.matriz[y][x] == " ":
+            elif direcao == "direita" and x <= largura - 2 and self.verificar_direcao(self.matriz[y][x + 1], self.matriz[y][x - 1], self.matriz[y + 1][x], self.matriz[y - 1][x]) and (x+1) == " ":
                 x += 1
                 i+=1
+            else:
+                direcao = "deu merda"
+            print(f"Direção: {direcao}, Posição: ({x}, {y})")
             self.matriz[y][x] = "."
-            
         self.matriz[y][x] = "S"
         return self.matriz            
 
@@ -101,4 +100,4 @@ labirinto.matriz = labirinto.gerar_caminho_aleatorio( labirinto.largura, labirin
 for i in range(0, labirinto.altura):
     for j in range(0, labirinto.largura):
         print(labirinto.matriz[i][j], end="")
-    print()  # Nova linha após cada linha do labirinto
+    print()  # Nova linha após cada linha do labirinto[]
