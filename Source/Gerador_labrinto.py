@@ -34,7 +34,7 @@ class Labirinto:
         self.altura = altura
         #self.dificuldade = xxxx  # Pode ser adicionado depois
         self.labirinto = criar_esqueleto_labrinto(largura, altura)
-        self.gerar_caminho()
+        
 
 
     #printar bonitinho
