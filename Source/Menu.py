@@ -1,33 +1,26 @@
-#Importando as bibliotecas necessarias
-import pygame as pg
-from pygame.locals import *
+import pygame as pg, sys
 
-#configuração inicial do menu
-pg.init() 
-largura, altura = 1360, 700
-screen = pg.display.set_mode((largura, altura))
-rodando = True
-pg.display.set_caption("Jogo")
+
 
 #criar a classe de um botão
 class Botao():
-    def __init__(self, imagem, pos, text_input, font, base_color, hovering_color):
-        self.imagem = imagem
+    def __init__(self, image, pos, text_input, font, base_color, hovering_color):
+        self.image = image
         self.x_pos = pos[0]
         self.y_pos = pos[1]
         self.font = font
         self.base_color, self.hovering_color = base_color, hovering_color
         self.text_input = text_input
         self.text = self.font.render(self.text_input, True, self.base_color)
-        if self.imagem is None:
-            self.imagem = self.text
-        self.rect = self.imagem.get_rect(center=(self.x_pos, self.y_pos))
+        if self.image is None:
+            self.image = self.text
+        self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
         self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
 
-    def atualizar(self, screen):
-        if self.imagem is not None:
-            screen.blit(self.imagem, self.rect)
-        screen.blit(self.text, self.text_rect)
+    def atualizar(self, TELA):
+        if self.image is not None:
+            TELA.blit(self.image, self.rect)
+        TELA.blit(self.text, self.text_rect)
 
     def checarPorMouse(self, position):
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
@@ -40,79 +33,142 @@ class Botao():
         else:
             self.text = self.font.render(self.text_input, True, self.base_color)
 
+pg.init()
 
 
+TELA = pg.display.set_mode((1280, 720))
+pg.display.set_caption("Menu") # Modificado aqui
 
+BG = pg.image.load("if/Background.png") # Modificado aqui
 
+def get_font(size): # Returns Press-Start-2P in the desired size
+    return pg.font.Font("if/font.ttf", size) # Modificado aqui
 
-
-
-#definindo cores e imagens
-BLACK = (0, 0, 0)
-GRAY = (127, 127, 127)
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
-
-BG = BLUE
-
-
-'''
-def main_menu(): # Main Menu Screen
-    pg.display.set_caption("Menu")
-
+def play():
     while True:
-        screen.blit(BG, (0, 0))
+        PLAY_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
 
-        MENU_MOUSE_POS = pg.mouse.get_pos()
+        TELA.fill("black")
 
-        MENU_TEXT = get_font(100).render("MAIN MENU", True, "#b68f40")
-        MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
+        PLAY_TEXT = get_font(45).render("Essa é a tela da gameplay.", True, "White")
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
+        TELA.blit(PLAY_TEXT, PLAY_RECT)
 
-        PLAY_botao = Botao(imagem=pg.imagem.load("assets/Play Rect.png"), pos=(640, 250),
-                            text_input="JOGAR", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
-        OPTIONS_botao = Botao(imagem=pg.imagem.load("assets/Options Rect.png"), pos=(640, 400),
-                                text_input="OPÇÕES", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
-        QUIT_botao = Botao(imagem=pg.imagem.load("assets/Quit Rect.png"), pos=(640, 550),
-                             text_input="SAIR", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
+        PLAY_BACK = Botao(image=None, pos=(640, 460),
+                             text_input="VOLTAR", font=get_font(75), base_color="White", hovering_color="Green")
 
-        screen.blit(MENU_TEXT, MENU_RECT)
+        PLAY_BACK.trocarCor(PLAY_MOUSE_POS)
+        PLAY_BACK.atualizar(TELA)
 
-        for botao in [PLAY_botao, OPTIONS_botao, QUIT_botao]:
-            botao.changeColor(MENU_MOUSE_POS)
-            botao.update(screen)
+        for event in pg.event.get(): # Modificado aqui
+            if event.type == pg.QUIT: # Modificado aqui
+                pg.quit() # Modificado aqui
+                sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
+                if PLAY_BACK.checarPorMouse(PLAY_MOUSE_POS):
+                    main_menu()
 
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                pg.quit()
+        pg.display.update() # Modificado aqui
 
-            if event.type == pg.MOUSEBUTTONDOWN:
-                if PLAY_botao.checarPorMouse(MENU_MOUSE_POS):
-                    jogar()
-                if OPTIONS_botao.checarPorMouse(MENU_MOUSE_POS):
-                    opcoes()
-                if QUIT_botao.checarPorMouse(MENU_MOUSE_POS):
-                    pg.quit()
-                    
+def options():
+    while True:
+        OPTIONS_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
 
-'''                
+        TELA.fill("white")
 
-""""
-while rodando:                            #loop tela
-    for event in pg.event.get():          #definir eventos no loop
-        print(event)                      
-        if event.type == pg.QUIT:         #sair ao apertar no X
-            rodando = False
+        OPTIONS_TEXT = get_font(45).render("Tela de estatísticas.", True, "Black")
+        OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(640, 260))
+        TELA.blit(OPTIONS_TEXT, OPTIONS_RECT)
+
+        OPTIONS_BACK = Botao(image=None, pos=(640, 460),
+                              text_input="VOLTAR", font=get_font(75), base_color="Black", hovering_color="Green")
+
+        OPTIONS_BACK.trocarCor(OPTIONS_MOUSE_POS)
+        OPTIONS_BACK.atualizar(TELA)               
+
+        for event in pg.event.get(): # Modificado aqui
+            if event.type == pg.QUIT: # Modificado aqui
+                pg.quit() # Modificado aqui
+                sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
+                if OPTIONS_BACK.checarPorMouse(OPTIONS_MOUSE_POS):
+                    main_menu()
+
+        pg.display.update() # Modificado aqui
+
+
+def sair():
+    while True:
+        SAIR_MOUSE_POS = pg.mouse.get_pos() 
+
+        TELA.fill("white")
+
+        SAIR_TEXT = get_font(45).render("Tem certeza que deseja sair?", True, "Black")
+        SAIR_RECT = SAIR_TEXT.get_rect(center=(640, 130))
+        TELA.blit(SAIR_TEXT, SAIR_RECT)
+
+        SAIR_BACK = Botao(image=None, pos=(640, 500),
+                              text_input="VOLTAR", font=get_font(75), base_color="Black", hovering_color="Green")
+        SAIR_BACK.trocarCor(SAIR_MOUSE_POS)
+        SAIR_BACK.atualizar(TELA)
+
+
+        SAIR_SIM = Botao(image=None, pos=(640, 360),
+                              text_input="SIM", font=get_font(75), base_color="Black", hovering_color="Red")
+        SAIR_SIM.trocarCor(SAIR_MOUSE_POS)
+        SAIR_SIM.atualizar(TELA)               
+
+        for event in pg.event.get(): # Modificado aqui
+            if event.type == pg.QUIT: # Modificado aqui
+                pg.quit() # Modificado aqui
+                sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
+                if SAIR_BACK.checarPorMouse(SAIR_MOUSE_POS):
+                    main_menu()
+                if SAIR_SIM.checarPorMouse(SAIR_MOUSE_POS):
+                    pg.quit() # Modificado aqui
+                    sys.exit()
+
+        pg.display.update() # Modificado aqui
 
 
     
-        if event.type == pg.KEYDOWN:
-            if event.key == pg.K_r:
-                background = RED
-            elif event.key == pg.K_g:
-                background = GREEN
 
-    screen.fill(background)                                        #cor da tela
-    pg.display.update()
-"""
+
+def main_menu():
+    while True:
+        TELA.blit(BG, (0, 0))
+
+        MENU_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
+
+        MENU_TEXT = get_font(120).render("MENU", True, "#b68f40")
+        MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
+
+        PLAY_BOTAO = Botao(image=pg.image.load("if/Play Rect.png"), pos=(640, 250), # Modificado aqui
+                             text_input="JOGAR", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
+        OPTIONS_BOTAO = Botao(image=pg.image.load("if/Options Rect.png"), pos=(640, 400), # Modificado aqui
+                                text_input="ESTATÍSTICAS", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
+        SAIR_BOTAO = Botao(image=pg.image.load("if/Quit Rect.png"), pos=(640, 550), # Modificado aqui
+                             text_input="SAIR", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
+
+        TELA.blit(MENU_TEXT, MENU_RECT)
+
+        for botao in [PLAY_BOTAO, OPTIONS_BOTAO, SAIR_BOTAO]:
+            botao.trocarCor(MENU_MOUSE_POS)
+            botao.atualizar(TELA)
+
+        for event in pg.event.get(): # Modificado aqui
+            if event.type == pg.QUIT: # Modificado aqui
+                pg.quit() # Modificado aqui
+                sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
+                if PLAY_BOTAO.checarPorMouse(MENU_MOUSE_POS):
+                    play()
+                if OPTIONS_BOTAO.checarPorMouse(MENU_MOUSE_POS):
+                    options()
+                if SAIR_BOTAO.checarPorMouse(MENU_MOUSE_POS):
+                    sair()
+
+        pg.display.update() # Modificado aqui
+
+main_menu()
