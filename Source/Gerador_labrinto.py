@@ -7,8 +7,8 @@ altura = 31
 tamanho_celula = 20  # tamanho de cada quadrado em pixels
 
 # Novo tamanho da janela
-largura_janela = 800
-altura_janela = 800
+largura_janela = 600
+altura_janela = 600
 
 # Calcula o tamanho da célula para caber dentro da janela
 tamanho_celula_x = largura_janela // largura
