@@ -34,18 +34,26 @@ class Labirinto:
         return self.matriz
     
 
-    def verificar_direcao(self, direita, esquerda, baixo , cima): #passar os 4 pontos diretamente adjacentes ao ponto atual
+    def verificar_direcao(self, x, y): #passar o ponto atual
         #verificar se ao redor do ponto só existem dois caminhos 
+        #quanto mais pra cima menor o y e mais pra direita maior o x
         ocupados = 0
+        direita = self.matriz[y][x + 1] if x + 1 < self.largura else "#"
+        esquerda = self.matriz[y][x - 1] if x - 1 >= 0 else "#" 
+        cima = self.matriz[y - 1][x] if y - 1 >= 0 else "#"
+        baixo = self.matriz[y + 1][x] if y + 1 < self.altura else "#"
         if direita == ".":
             ocupados += 1
         if esquerda == ".":     
-            ocupados == 1 
+            ocupados += 1 
         if baixo == ".":
             ocupados += 1
         if cima == ".":
             ocupados += 1
-        return ocupados <= 1
+        if ocupados <= 1:
+            return True
+        else:
+            return False
     
     def __init__(self, largura, altura):
         #atributos do labirinto:
@@ -61,48 +69,49 @@ class Labirinto:
 
     def gerar_caminho_aleatorio(self, largura, altura):
         #tratando erro de loop, APAGAR DEPOIS
-        contador = 0
-        #começar em ponto aleatorio
+        continuar = True
         x = 1
-        y = altura//2
-        self.matriz[y][0] = "E"
-        self.matriz[y][1] = "."
-        tamanho = r.randint(1, (largura * altura) // 6)
-        i=0
-        while i < tamanho:
-            direcao = self.gerar_direcao()  #verificar se a direcao é valida. não é uma parede e nem ligada a dois caminhos
-            if direcao == "cima":
-                y += 1
-                if y < altura - 2 and self.verificar_direcao(self.matriz[y][x+1], self.matriz[y][x - 1], self.matriz[y - 1][x], self.matriz[y + 1][x]) and self.matriz[y][x] == " ":
-                    i+=1
-                    print(f"Direção: {direcao}, Posição: ({x}, {y})")
+        y = 1
+        x1 = x
+        y1 = y-1
+        x2 = x
+        y2 = y+1
+        x3 = x+1
+        y3 = y
+        x4 = x-1
+        y4 = y
+        cima = ["cima", x1, y1]
+        baixo =["baixo", x2, y2]
+        direita = ["direita", x3, y3]
+        esquerda = ["esquerda", x4, y4]
+        #começar em ponto aleatorio
+        direcoes = [cima , baixo, direita, esquerda]
+        self.matriz[1][1] = "E"
+        while continuar:
+            r.shuffle(direcoes)
+            continuar = False
+            for i in direcoes:
+                x = i[1]
+                y = i[2]
+                print(x, y)
+                if self.verificar_direcao(x, y):
+                    self.matriz[y][x] = "."
+                    if i[0] == "cima":
+                        i[2] -= 1  # Mover para cima
+                    elif i[0] == "baixo":
+                        i[2] += 1
+                    elif i[0] == "direita":
+                        i[1] += 1
+                    elif i[0] == "esquerda":
+                        i[1] -= 1
+                    
+                    
+                    continuar = True
+                    print(f"Direção: {i[0]} - Ponto: ({x}, {y})")
+                    break
                 else:
-                    y -= 1
-            elif direcao == "baixo":
-                y -= 1
-                if y > 0 and self.verificar_direcao(self.matriz[y][x+1], self.matriz[y][x - 1], self.matriz[y - 1][x], self.matriz[y + 1][x]) and self.matriz[y][x] == " ":
-                    i+=1
-                    print(f"Direção: {direcao}, Posição: ({x}, {y})")
-                else:
-                    y += 1
-            elif direcao == "esquerda":
-                x -= 1
-                if x > 1 and self.verificar_direcao(self.matriz[y][x + 1], self.matriz[y][x - 1], self.matriz[y - 1][x], self.matriz[y + 1][x]) and self.matriz[y][x] == " ":
-                    i+=1
-                    print(f"Direção: {direcao}, Posição: ({x}, {y})")
-                else:
-                    x += 1
-            elif direcao == "direita":
-                x += 1
-                if x <= largura - 2 and self.verificar_direcao(self.matriz[y][x + 1], self.matriz[y][x - 1], self.matriz[y - 1][x], self.matriz[y + 1][x]) and self.matriz[y][x] == " ":
-                    i+=1
-                    print(f"Direção: {direcao}, Posição: ({x}, {y})")
-                else:
-                    x -= 1
-            self.matriz[y][x] = "."
-        self.matriz[y][x] = "S"
-        return self.matriz            
-
+                    continuar = False
+                    print("parar")
 
 labirinto = Labirinto(21, 21) 
 for i in range(0, labirinto.altura):
