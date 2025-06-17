@@ -39,10 +39,10 @@ pg.init()
 TELA = pg.display.set_mode((1280, 720))
 pg.display.set_caption("Menu") # Modificado aqui
 
-BG = pg.image.load("if/Background.png") # Modificado aqui
+BG = pg.image.load("Dados/imagens_fontes/Background.png") # Modificado aqui
 
 def get_font(size): # Returns Press-Start-2P in the desired size
-    return pg.font.Font("if/font.ttf", size) # Modificado aqui
+    return pg.font.Font("Dados/imagens_fontes/font.ttf", size) # Modificado aqui
 
 def play():
     while True:
@@ -144,11 +144,11 @@ def main_menu():
         MENU_TEXT = get_font(120).render("MENU", True, "#b68f40")
         MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
 
-        PLAY_BOTAO = Botao(image=pg.image.load("if/Play Rect.png"), pos=(640, 250), # Modificado aqui
+        PLAY_BOTAO = Botao(image=pg.image.load("Dados/imagens_fontes/Play Rect.png"), pos=(640, 250), # Modificado aqui
                              text_input="JOGAR", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
-        OPTIONS_BOTAO = Botao(image=pg.image.load("if/Options Rect.png"), pos=(640, 400), # Modificado aqui
+        OPTIONS_BOTAO = Botao(image=pg.image.load("Dados/imagens_fontes/Options Rect.png"), pos=(640, 400), # Modificado aqui
                                 text_input="ESTATÍSTICAS", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
-        SAIR_BOTAO = Botao(image=pg.image.load("if/Quit Rect.png"), pos=(640, 550), # Modificado aqui
+        SAIR_BOTAO = Botao(image=pg.image.load("Dados/imagens_fontes/Quit Rect.png"), pos=(640, 550), # Modificado aqui
                              text_input="SAIR", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
 
         TELA.blit(MENU_TEXT, MENU_RECT)
