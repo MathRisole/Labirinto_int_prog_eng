@@ -1,83 +1,89 @@
 import pygame
 import random
 
+class Labirinto:
+    def __init__(self, largura, altura):
+        self.largura = largura
+        self.altura = altura
+        self.tamanho_celula = 20
 
-largura = 31  # número de células (é importante ser impar pq tem hora que o codigo divide coisa por 2)
-altura = 31
-tamanho_celula = 20  # tamanho de cada quadrado em pixels
+        # Tamanho da janela pode ser fixo ou proporcional
+        self.largura_janela = 600
+        self.altura_janela = 600
 
-# Novo tamanho da janela
-largura_janela = 600
-altura_janela = 600
+        # Ajustar o tamanho das células para caber dentro da janela
+        tamanho_celula_x = self.largura_janela // largura
+        tamanho_celula_y = self.altura_janela // altura
+        self.tamanho_celula = min(tamanho_celula_x, tamanho_celula_y)
 
-# Calcula o tamanho da célula para caber dentro da janela
-tamanho_celula_x = largura_janela // largura
-tamanho_celula_y = altura_janela // altura
-tamanho_celula = min(tamanho_celula_x, tamanho_celula_y)
+        # Cores
+        self.COR_PAREDE = (40, 90, 0)
+        self.COR_CAMINHO = (255, 255, 255)
+        self.COR_SAIDA = (255, 0, 0)
+        self.COR_ENTRADA = (0, 255, 0)
 
+        # Mapa inicial
+        self.mapa = [['#' for _ in range(largura)] for _ in range(altura)]
 
+    def escavar(self, x, y):
+        movimentos = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # cima, baixo, esquerda, direita
+        random.shuffle(movimentos)
+        for dx, dy in movimentos:
+            nx, ny = x + dx*2, y + dy*2
+            if 0 < nx < self.largura - 1 and 0 < ny < self.altura - 1:
+                if self.mapa[ny][nx] == '#':
+                    self.mapa[y + dy][x + dx] = '.'
+                    self.mapa[ny][nx] = '.'
+                    self.escavar(nx, ny)
 
-# Cores
-COR_PAREDE = (40, 90, 0)     
-COR_CAMINHO = (255, 255, 255)
-COR_SAIDA = (255, 0, 0)   
-COR_ENTRADA = (0, 255, 0)  
+    def gerar_labirinto(self):
+        # Começo da escavação
+        self.mapa[1][1] = '.'
+        self.escavar(1, 1)
 
-# Gerar o labirinto
-mapa = [['#' for a in range(largura)] for b in range(altura)]
+        # Criar entrada
+        for i in range(self.largura):
+            if self.mapa[1][i] == '.':
+                self.mapa[1][i] = 'E'
+                break
 
-def escavar(x, y):
-    movimentos = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # cima, baixo, esquerda, direita
-    random.shuffle(movimentos)
-    for dx, dy in movimentos:
-        nx, ny = x + dx*2, y + dy*2
-        if 0 < nx < largura-1 and 0 < ny < altura-1:
-            if mapa[ny][nx] == '#':
-                mapa[y + dy][x + dx] = '.'
-                mapa[ny][nx] = '.'
-                escavar(nx, ny)
+        # Criar saída
+        self.mapa[self.altura - 2][self.largura - 2] = 'S'
 
-# Começo da escavação
-mapa[1][1] = '.'
-escavar(1, 1)
+    def desenhar_mapa(self, screen):
+        for y in range(self.altura):
+            for x in range(self.largura):
+                rect = pygame.Rect(x * self.tamanho_celula, y * self.tamanho_celula, self.tamanho_celula, self.tamanho_celula)
+                if self.mapa[y][x] == '#':
+                    pygame.draw.rect(screen, self.COR_PAREDE, rect)
+                elif self.mapa[y][x] == '.':
+                    pygame.draw.rect(screen, self.COR_CAMINHO, rect)
+                elif self.mapa[y][x] == 'E':
+                    pygame.draw.rect(screen, self.COR_ENTRADA, rect)
+                elif self.mapa[y][x] == 'S':
+                    pygame.draw.rect(screen, self.COR_SAIDA, rect)
 
-# Criar entrada (no canto superior)
-for i in range(largura):
-    if mapa[1][i] == '.':
-        mapa[1][i] = 'E'
-        break
+    def rodar(self):
+        pygame.init()
+        screen = pygame.display.set_mode((self.largura * self.tamanho_celula, self.altura * self.tamanho_celula), pygame.RESIZABLE)
+        pygame.display.set_caption("Labirinto")
 
-mapa[altura - 2][largura-2] = 'S'
+        rodando = True
+        while rodando:
+            for evento in pygame.event.get():
+                if evento.type == pygame.QUIT:
+                    rodando = False
 
-# Inicializar Pygame
-pygame.init()
-#criar a tela com base no tamanho do labirinto
-screen = pygame.display.set_mode((largura * tamanho_celula, altura * tamanho_celula), pygame.RESIZABLE)
-pygame.display.set_caption("Labirinto")
+            screen.fill(self.COR_PAREDE)
+            self.desenhar_mapa(screen)
+            pygame.display.flip()
 
-# Função para desenhar o labirinto no pygame
-def desenhar_mapa():
-    for y in range(altura):
-        for x in range(largura):
-            rect = pygame.Rect(x * tamanho_celula, y * tamanho_celula, tamanho_celula, tamanho_celula)
-            if mapa[y][x] == '#':
-                pygame.draw.rect(screen, COR_PAREDE, rect)
-            elif mapa[y][x] == '.':
-                pygame.draw.rect(screen, COR_CAMINHO, rect)
-            elif mapa[y][x] == 'E':
-                pygame.draw.rect(screen, COR_ENTRADA, rect)
-            elif mapa[y][x] == 'S':
-                pygame.draw.rect(screen, COR_SAIDA, rect)
+        pygame.quit()
+# pra chamar essa função:
+#lab = Labirinto(x, y) #lembra que o labirinto tem que ter largura e altura ímpares
+#lab.gerar_labirinto()
+#lab.rodar()
 
-# Loop para a geração
-rodando = True
-while rodando:
-    for evento in pygame.event.get():
-        if evento.type == pygame.QUIT:
-            rodando = False
-
-    screen.fill(COR_PAREDE)
-    desenhar_mapa()
-    pygame.display.flip()
-
-pygame.quit()
+lab = Labirinto(51, 51) 
+lab.gerar_labirinto()
+lab.rodar()
