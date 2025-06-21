@@ -73,8 +73,14 @@ class Labirinto:
             screen.fill(self.COR_PAREDE)
             self.desenhar_mapa(screen)
             pygame.display.flip()
-
         pygame.quit()
+
+    
+    def salvar_em_arquivo(self, nome_arquivo):
+        with open(nome_arquivo, "w") as arquivo:
+            for linha in self.mapa:
+                arquivo.write("".join(linha) + "\n")
+
 # pra chamar essa função:
 #lab = Labirinto(x, y) #lembra que o labirinto tem que ter largura e altura ímpares
 #lab.gerar_labirinto()
