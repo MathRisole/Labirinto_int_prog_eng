@@ -1,7 +1,5 @@
 import pygame as pg, sys
 
-
-
 #criar a classe de um botão
 class Botao():
     def __init__(self, image, pos, text_input, font, base_color, hovering_color):
@@ -37,67 +35,64 @@ pg.init()
 
 
 TELA = pg.display.set_mode((1280, 720))
-pg.display.set_caption("Menu") # Modificado aqui
+pg.display.set_caption("Labirinto") # Modificado aqui
 
 BG = pg.image.load("Dados/imagens_fontes/Background.png") # Modificado aqui
 
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pg.font.Font("Dados/imagens_fontes/font.ttf", size) # Modificado aqui
 
-def play():
+
+def play(objeto_labirinto_aleatorio):
     while True:
-        PLAY_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
+
+        objeto_labirinto_aleatorio.gerar_labirinto()
+        objeto_labirinto_aleatorio.rodar(TELA)
+
+        pg.display.update() # Modificado aqui
+
+def placar_lideres(objeto_labirinto_aleatorio, caminho_arquivo_jogadores):
+    while True:
+        PLACAR_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
 
         TELA.fill("black")
+        PLACAR_TEXTO_TITULO= get_font(40).render("PLACAR DE LIDERES", True, "white")
+        PLACAR_RECT_TITULO = PLACAR_TEXTO_TITULO.get_rect(center=(640, 25))
+        TELA.blit(PLACAR_TEXTO_TITULO, PLACAR_RECT_TITULO)
 
-        PLAY_TEXT = get_font(45).render("Essa é a tela da gameplay.", True, "White")
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
-        TELA.blit(PLAY_TEXT, PLAY_RECT)
+        PLACAR_BACK = Botao(image=None, pos=(1160, 700),
+                            text_input="VOLTAR", font=get_font(20), base_color="white", hovering_color="Green")
+        
+        with open(caminho_arquivo_jogadores, 'r', encoding='utf-8') as arq_usavel:
+            i=70
+            lista_jogadores = []
+            for linha in arq_usavel:
+                linha = linha.split()
+                lista_jogadores.append((linha[0], linha[1]))
+            lista_jogadores.sort(key=lambda x: x[1])
 
-        PLAY_BACK = Botao(image=None, pos=(640, 460),
-                             text_input="VOLTAR", font=get_font(75), base_color="White", hovering_color="Green")
+            for j in range(len(lista_jogadores)):
+                PLACAR_TEXTO_JOGADORES = get_font(30).render(lista_jogadores[j][0]+"..........."+lista_jogadores[j][1],
+                                                             True, "white")
+                PLACAR_RECT_JOGADORES = PLACAR_TEXTO_JOGADORES.get_rect(center=(640, i))
+                TELA.blit(PLACAR_TEXTO_JOGADORES, PLACAR_RECT_JOGADORES)
+                i+=30
 
-        PLAY_BACK.trocarCor(PLAY_MOUSE_POS)
-        PLAY_BACK.atualizar(TELA)
-
-        for event in pg.event.get(): # Modificado aqui
-            if event.type == pg.QUIT: # Modificado aqui
-                pg.quit() # Modificado aqui
-                sys.exit()
-            if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
-                if PLAY_BACK.checarPorMouse(PLAY_MOUSE_POS):
-                    main_menu()
-
-        pg.display.update() # Modificado aqui
-
-def options():
-    while True:
-        OPTIONS_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
-
-        TELA.fill("white")
-
-        OPTIONS_TEXT = get_font(45).render("Tela de estatísticas.", True, "Black")
-        OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(640, 260))
-        TELA.blit(OPTIONS_TEXT, OPTIONS_RECT)
-
-        OPTIONS_BACK = Botao(image=None, pos=(640, 460),
-                              text_input="VOLTAR", font=get_font(75), base_color="Black", hovering_color="Green")
-
-        OPTIONS_BACK.trocarCor(OPTIONS_MOUSE_POS)
-        OPTIONS_BACK.atualizar(TELA)               
+        PLACAR_BACK.trocarCor(PLACAR_MOUSE_POS)
+        PLACAR_BACK.atualizar(TELA)               
 
         for event in pg.event.get(): # Modificado aqui
             if event.type == pg.QUIT: # Modificado aqui
                 pg.quit() # Modificado aqui
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
-                if OPTIONS_BACK.checarPorMouse(OPTIONS_MOUSE_POS):
-                    main_menu()
+                if PLACAR_BACK.checarPorMouse(PLACAR_MOUSE_POS):
+                    main_menu(objeto_labirinto_aleatorio, caminho_arquivo_jogadores)
 
         pg.display.update() # Modificado aqui
 
 
-def sair():
+def sair(objeto_labirinto_aleatorio, caminho_arquivo_jogadores):
     while True:
         SAIR_MOUSE_POS = pg.mouse.get_pos() 
 
@@ -124,7 +119,7 @@ def sair():
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
                 if SAIR_BACK.checarPorMouse(SAIR_MOUSE_POS):
-                    main_menu()
+                    main_menu(objeto_labirinto_aleatorio, caminho_arquivo_jogadores)
                 if SAIR_SIM.checarPorMouse(SAIR_MOUSE_POS):
                     pg.quit() # Modificado aqui
                     sys.exit()
@@ -135,7 +130,7 @@ def sair():
     
 
 
-def main_menu():
+def main_menu(objeto_labirinto_aleatorio, caminho_arquivo_jogadores):
     while True:
         TELA.blit(BG, (0, 0))
 
@@ -146,14 +141,14 @@ def main_menu():
 
         PLAY_BOTAO = Botao(image=pg.image.load("Dados/imagens_fontes/Play Rect.png"), pos=(640, 250), # Modificado aqui
                              text_input="JOGAR", font=get_font(75), base_color=(215, 252, 212), hovering_color="White")
-        OPTIONS_BOTAO = Botao(image=pg.image.load("Dados/imagens_fontes/Options Rect.png"), pos=(640, 400), # Modificado aqui
-                                text_input="ESTATÍSTICAS", font=get_font(75), base_color=(215, 252, 212), hovering_color="White")
+        PLACAR_LIDERES_BOTAO = Botao(image=pg.image.load("Dados/imagens_fontes/PLACAR Rect.png"), pos=(640, 400), # Modificado aqui
+                                text_input="PLACAR", font=get_font(75), base_color=(215, 252, 212), hovering_color="White")
         SAIR_BOTAO = Botao(image=pg.image.load("Dados/imagens_fontes/Quit Rect.png"), pos=(640, 550), # Modificado aqui
                              text_input="SAIR", font=get_font(75), base_color=(215, 252, 212), hovering_color="White")
 
         TELA.blit(MENU_TEXT, MENU_RECT)
 
-        for botao in [PLAY_BOTAO, OPTIONS_BOTAO, SAIR_BOTAO]:
+        for botao in [PLAY_BOTAO, PLACAR_LIDERES_BOTAO, SAIR_BOTAO]:
             botao.trocarCor(MENU_MOUSE_POS)
             botao.atualizar(TELA)
 
@@ -163,12 +158,10 @@ def main_menu():
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
                 if PLAY_BOTAO.checarPorMouse(MENU_MOUSE_POS):
-                    play()
-                if OPTIONS_BOTAO.checarPorMouse(MENU_MOUSE_POS):
-                    options()
+                    play(objeto_labirinto_aleatorio)
+                if PLACAR_LIDERES_BOTAO.checarPorMouse(MENU_MOUSE_POS):
+                    placar_lideres(objeto_labirinto_aleatorio, caminho_arquivo_jogadores)
                 if SAIR_BOTAO.checarPorMouse(MENU_MOUSE_POS):
-                    sair()
+                    sair(objeto_labirinto_aleatorio, caminho_arquivo_jogadores)
 
         pg.display.update() # Modificado aqui
-
-main_menu()

@@ -1,8 +1,9 @@
 from Source import Gerador_labrinto as GL
 from Source import Movimento_e_colisao as MC
 from Source import Menu
-import pygame as pg
-import random
-import datetime as dt
+from pathlib import Path
+base_dir = Path.cwd()
 
-main_menu()
+lab_aleatorio = GL.Labirinto(55, 31)
+
+Menu.main_menu(lab_aleatorio, base_dir/'Dados'/'jogadores.txt')

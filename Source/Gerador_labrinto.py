@@ -5,11 +5,10 @@ class Labirinto:
     def __init__(self, largura, altura):
         self.largura = largura
         self.altura = altura
-        self.tamanho_celula = 20
 
         # Tamanho da janela pode ser fixo ou proporcional
-        self.largura_janela = 600
-        self.altura_janela = 600
+        self.largura_janela = 1280
+        self.altura_janela = 720
 
         # Ajustar o tamanho das células para caber dentro da janela
         tamanho_celula_x = self.largura_janela // largura
@@ -63,11 +62,8 @@ class Labirinto:
                 elif self.mapa[y][x] == 'S':
                     pygame.draw.rect(screen, self.COR_SAIDA, rect)
 
-    def rodar(self):
-        pygame.init()
-        screen = pygame.display.set_mode((self.largura * self.tamanho_celula, self.altura * self.tamanho_celula), pygame.RESIZABLE)
-        pygame.display.set_caption("Labirinto")
-
+    def rodar(self, screen):
+        
         rodando = True
         while rodando:
             for evento in pygame.event.get():
@@ -83,7 +79,3 @@ class Labirinto:
 #lab = Labirinto(x, y) #lembra que o labirinto tem que ter largura e altura ímpares
 #lab.gerar_labirinto()
 #lab.rodar()
-
-lab = Labirinto(51, 51) 
-lab.gerar_labirinto()
-lab.rodar()
