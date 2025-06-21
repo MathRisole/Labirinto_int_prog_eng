@@ -43,15 +43,322 @@ def get_font(size): # Returns Press-Start-2P in the desired size
     return pg.font.Font("Dados/imagens_fontes/font.ttf", size) # Modificado aqui
 
 
-def play(objeto_labirinto_aleatorio):
+def facil(caminho_arquivo_jogadores):
     while True:
+        FACIL_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
 
-        objeto_labirinto_aleatorio.gerar_labirinto()
-        objeto_labirinto_aleatorio.rodar(TELA)
+        TELA.fill("green")
+
+        FACIL_TEXT = get_font(45).render("Fácil", True, "Black")
+        FACIL_RECT = FACIL_TEXT.get_rect(center=(640, 120))
+        TELA.blit(FACIL_TEXT, FACIL_RECT)
+        
+        FACIL_UM = Botao(image=None, pos=(640, 330),
+                                text_input="Fase F1", font=get_font(60), base_color="Black", hovering_color="Yellow")
+        
+        FACIL_UM.trocarCor(FACIL_MOUSE_POS)
+        FACIL_UM.atualizar(TELA)
+
+        
+        FACIL_BACK = Botao(image=None, pos=(200, 560),
+                                text_input="VOLTAR", font=get_font(30), base_color="Black", hovering_color="Purple")
+        
+
+        FACIL_BACK.trocarCor(FACIL_MOUSE_POS)
+        FACIL_BACK.atualizar(TELA)
+
+
+        for event in pg.event.get(): # Modificado aqui
+            if event.type == pg.QUIT: # Modificado aqui
+                pg.quit() # Modificado aqui
+                sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
+                if FACIL_BACK.checarPorMouse(FACIL_MOUSE_POS):
+                    campanha(caminho_arquivo_jogadores)
+ #                 if FACIL_UM.checarPorMouse(MEDIO_MOUSE_POS):
+ #                     #INICIAL FASE M1
+
 
         pg.display.update() # Modificado aqui
 
-def placar_lideres(objeto_labirinto_aleatorio, caminho_arquivo_jogadores):
+def medio(caminho_arquivo_jogadores):
+    while True:
+        MEDIO_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
+
+        TELA.fill("orange")
+
+        MEDIO_TEXT = get_font(45).render("Médio", True, "Black")
+        MEDIO_RECT = MEDIO_TEXT.get_rect(center=(640, 120))
+        TELA.blit(MEDIO_TEXT, MEDIO_RECT)
+
+        MEDIO_UM = Botao(image=None, pos=(400, 330),
+                                 text_input="Fase M1", font=get_font(60), base_color="Black", hovering_color="Gray")
+
+        MEDIO_UM.trocarCor(MEDIO_MOUSE_POS)
+        MEDIO_UM.atualizar(TELA)
+
+        MEDIO_DOIS = Botao(image=None, pos=(920, 330),
+                                 text_input="Fase M2", font=get_font(60), base_color="Black", hovering_color="Gray")
+
+        MEDIO_DOIS.trocarCor(MEDIO_MOUSE_POS)
+        MEDIO_DOIS.atualizar(TELA)
+
+
+
+        MEDIO_BACK = Botao(image=None, pos=(200, 560),
+                                 text_input="VOLTAR", font=get_font(30), base_color="Black", hovering_color="Purple")
+
+
+        MEDIO_BACK.trocarCor(MEDIO_MOUSE_POS)
+        MEDIO_BACK.atualizar(TELA)
+
+        for event in pg.event.get(): # Modificado aqui
+            if event.type == pg.QUIT: # Modificado aqui
+                pg.quit() # Modificado aqui
+                sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
+                if MEDIO_BACK.checarPorMouse(MEDIO_MOUSE_POS):
+                    campanha(caminho_arquivo_jogadores)
+ #                 if MEDIO_UM.checarPorMouse(MEDIO_MOUSE_POS):
+ #                     #INICIAL FASE M1
+  #                 if MEDIO_UM.checarPorMouse(MEDIO_MOUSE_POS):
+ #                     #INICIAL FASE M2
+
+
+
+        pg.display.update() # Modificado aqui
+
+
+def dificil(caminho_arquivo_jogadores):
+    while True:
+        DIFICIL_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
+
+        TELA.fill("Red")
+
+        DIFICIL_TEXT = get_font(45).render("Difícil", True, "Black")
+        DIFICIL_RECT = DIFICIL_TEXT.get_rect(center=(640, 120))
+        TELA.blit(DIFICIL_TEXT, DIFICIL_RECT)
+
+        DIFICIL_UM = Botao(image=None, pos=(400, 330),
+                                 text_input="Fase D1", font=get_font(60), base_color="Black", hovering_color="White")
+
+        DIFICIL_UM.trocarCor(DIFICIL_MOUSE_POS)
+        DIFICIL_UM.atualizar(TELA)
+
+        DIFICIL_DOIS = Botao(image=None, pos=(920, 330),
+                                 text_input="Fase D2", font=get_font(60), base_color="Black", hovering_color="white")
+
+        DIFICIL_DOIS.trocarCor(DIFICIL_MOUSE_POS)
+        DIFICIL_DOIS.atualizar(TELA)
+
+        DIFICIL_BACK = Botao(image=None, pos=(200, 560),
+                                 text_input="VOLTAR", font=get_font(30), base_color="Black", hovering_color="Purple")
+
+        DIFICIL_BACK.trocarCor(DIFICIL_MOUSE_POS)
+        DIFICIL_BACK.atualizar(TELA)
+
+        for event in pg.event.get(): # Modificado aqui
+            if event.type == pg.QUIT: # Modificado aqui
+                pg.quit() # Modificado aqui
+                sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
+                if DIFICIL_BACK.checarPorMouse(DIFICIL_MOUSE_POS):
+                    campanha(caminho_arquivo_jogadores)
+ #                 if DIFICIL_UM.checarPorMouse(DIFICIL_MOUSE_POS):
+ #                     #INICIAL FASE D1
+  #                 if DIFICIL_DOIS.checarPorMouse(DIFICIL_MOUSE_POS):
+ #                     #INICIAL FASE D2
+
+
+        pg.display.update() # Modificado aqui
+
+def campanha(caminho_arquivo_jogadores):
+    while True:
+        CAMPANHA_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
+
+        TELA.fill("white")
+
+        CAMPANHA_TEXT = get_font(45).render("Escolha a dificuldade:", True, "Black")
+        CAMPANHA_RECT = CAMPANHA_TEXT.get_rect(center=(640, 120))
+        TELA.blit(CAMPANHA_TEXT, CAMPANHA_RECT)
+        
+        CAMPANHA_FACIL = Botao(image=None, pos=(180, 330),
+                                text_input="Fácil", font=get_font(60), base_color="Black", hovering_color="Green")
+        
+        CAMPANHA_FACIL.trocarCor(CAMPANHA_MOUSE_POS)
+        CAMPANHA_FACIL.atualizar(TELA)
+
+        CAMPANHA_MEDIO = Botao(image=None, pos=(550, 330),
+                                text_input="Médio", font=get_font(60), base_color="Black", hovering_color="Orange")
+
+            
+        CAMPANHA_MEDIO.trocarCor(CAMPANHA_MOUSE_POS)
+        CAMPANHA_MEDIO.atualizar(TELA)
+
+        CAMPANHA_DIFICIL = Botao(image=None, pos=(990, 330),
+                                text_input="Difícil", font=get_font(60), base_color="Black", hovering_color="Red")
+
+            
+        CAMPANHA_DIFICIL.trocarCor(CAMPANHA_MOUSE_POS)
+        CAMPANHA_DIFICIL.atualizar(TELA)
+        
+        
+        CAMPANHA_BACK = Botao(image=None, pos=(200, 560),
+                                text_input="VOLTAR", font=get_font(30), base_color="Black", hovering_color="Purple")
+        
+
+        CAMPANHA_BACK.trocarCor(CAMPANHA_MOUSE_POS)
+        CAMPANHA_BACK.atualizar(TELA)
+                            
+        for event in pg.event.get(): # Modificado aqui
+            if event.type == pg.QUIT: # Modificado aqui
+                pg.quit() # Modificado aqui
+                sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
+                if CAMPANHA_BACK.checarPorMouse(CAMPANHA_MOUSE_POS):
+                    play(caminho_arquivo_jogadores)
+                if CAMPANHA_FACIL.checarPorMouse(CAMPANHA_MOUSE_POS):
+                    facil(caminho_arquivo_jogadores)
+                if CAMPANHA_MEDIO.checarPorMouse(CAMPANHA_MOUSE_POS):
+                    medio(caminho_arquivo_jogadores)
+                if CAMPANHA_DIFICIL.checarPorMouse(CAMPANHA_MOUSE_POS):
+                    dificil(caminho_arquivo_jogadores)
+
+        pg.display.update() # Modificado aqui
+
+
+def pegar_nome_jogador(caminho_arquivo_jogadores):
+    nome_jogador = ""
+    entrada_ativa = True
+    tamanho_maximo = 15 
+
+    while entrada_ativa:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+                sys.exit()
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_RETURN: 
+                    input_active = False 
+                elif event.key == pg.K_BACKSPACE: 
+                    nome_jogador = nome_jogador[:-1] 
+                else:
+                    if len(nome_jogador) < tamanho_maximo: 
+                        nome_jogador += event.unicode 
+
+        TELA.fill("black") 
+
+        
+        prompt_text = get_font(30).render("Digite seu nome:", True, "white")
+        prompt_rect = prompt_text.get_rect(center=(640, 200))
+        TELA.blit(prompt_text, prompt_rect)
+
+       
+        nome_surface = get_font(50).render(nome_jogador + ("|" if entrada_ativa else ""), True, "white") # Adiciona um cursor piscando
+        nome_rect = nome_surface.get_rect(center=(640, 300))
+        TELA.blit(nome_surface, nome_rect)
+
+        pg.display.update()
+
+    return nome_jogador
+
+
+def aleatorio(caminho_arquivo_jogadores):
+    while True:
+        ALEATORIO_MOUSE_POS = pg.mouse.get_pos()
+
+        TELA.fill("white")
+
+        ALEATORIO_TEXT = get_font(45).render("Modo Aleatório", True, "Black")
+        ALEATORIO_RECT = ALEATORIO_TEXT.get_rect(center=(640, 120))
+        TELA.blit(ALEATORIO_TEXT, ALEATORIO_RECT)
+
+        ALEATORIO_SELECIONAR = Botao(image=None, pos=(640, 330),
+                                         text_input="Selecionar usuário existente", font=get_font(43), base_color="Black", hovering_color="blue")
+
+        ALEATORIO_SELECIONAR.trocarCor(ALEATORIO_MOUSE_POS)
+        ALEATORIO_SELECIONAR.atualizar(TELA)
+
+        ALEATORIO_CRIAR = Botao(image=None, pos=(640, 440),
+                                         text_input="Criar usuário", font=get_font(43), base_color="Black", hovering_color="Red")
+
+        ALEATORIO_CRIAR.trocarCor(ALEATORIO_MOUSE_POS)
+        ALEATORIO_CRIAR.atualizar(TELA)
+
+        ALEATORIO_BACK = Botao(image=None, pos=(200, 560),
+                                         text_input="VOLTAR", font=get_font(30), base_color="Black", hovering_color="Purple")
+
+        ALEATORIO_BACK.trocarCor(ALEATORIO_MOUSE_POS)
+        ALEATORIO_BACK.atualizar(TELA)
+
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+                sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN:
+                if ALEATORIO_BACK.checarPorMouse(ALEATORIO_MOUSE_POS):
+                    play(caminho_arquivo_jogadores)
+                    return
+                
+                if ALEATORIO_SELECIONAR.checarPorMouse(ALEATORIO_MOUSE_POS):
+                    #selecionar personagem já criado
+                    pass
+                if ALEATORIO_CRIAR.checarPorMouse(ALEATORIO_MOUSE_POS):
+                    pegar_nome_jogador(caminho_arquivo_jogadores)
+                  
+        pg.display.update()
+
+
+
+
+def play(caminho_arquivo_jogadores):
+    while True:
+        PLAY_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
+
+        TELA.fill("black")
+
+        PLAY_TEXT = get_font(45).render("Escolha o modo de jogo:", True, "White")
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 160))
+        TELA.blit(PLAY_TEXT, PLAY_RECT)
+
+        PLAY_CAMPANHA = Botao(image=None, pos=(360, 360),
+                                text_input="CAMPANHA", font=get_font(45), base_color="White", hovering_color="Purple")
+
+            
+        PLAY_CAMPANHA.trocarCor(PLAY_MOUSE_POS)
+        PLAY_CAMPANHA.atualizar(TELA)
+
+        PLAY_ALEATORIO = Botao(image=None, pos=(900, 360),
+                                text_input="ALEATÓRIO", font=get_font(45), base_color="White", hovering_color="Blue")
+
+            
+        PLAY_ALEATORIO.trocarCor(PLAY_MOUSE_POS)
+        PLAY_ALEATORIO.atualizar(TELA)
+
+
+        PLAY_BACK = Botao(image=None, pos=(200, 560),
+                                text_input="VOLTAR", font=get_font(30), base_color="White", hovering_color="Green")
+
+            
+        PLAY_BACK.trocarCor(PLAY_MOUSE_POS)
+        PLAY_BACK.atualizar(TELA)
+
+        for event in pg.event.get(): # Modificado aqui
+            if event.type == pg.QUIT: # Modificado aqui
+                pg.quit() # Modificado aqui
+                sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
+                if PLAY_BACK.checarPorMouse(PLAY_MOUSE_POS):
+                    main_menu(caminho_arquivo_jogadores)
+                if PLAY_CAMPANHA.checarPorMouse(PLAY_MOUSE_POS):
+                     campanha(caminho_arquivo_jogadores)
+
+                if PLAY_ALEATORIO.checarPorMouse(PLAY_MOUSE_POS):
+                    aleatorio(caminho_arquivo_jogadores)
+                    
+        pg.display.update() # Modificado aqui
+
+def placar_lideres( caminho_arquivo_jogadores):
     while True:
         PLACAR_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
 
@@ -60,7 +367,7 @@ def placar_lideres(objeto_labirinto_aleatorio, caminho_arquivo_jogadores):
         PLACAR_RECT_TITULO = PLACAR_TEXTO_TITULO.get_rect(center=(640, 25))
         TELA.blit(PLACAR_TEXTO_TITULO, PLACAR_RECT_TITULO)
 
-        PLACAR_BACK = Botao(image=None, pos=(1160, 700),
+        PLACAR_BACK = Botao(image=None, pos=(1160, 670),
                             text_input="VOLTAR", font=get_font(20), base_color="white", hovering_color="Green")
         
         with open(caminho_arquivo_jogadores, 'r', encoding='utf-8') as arq_usavel:
@@ -87,12 +394,12 @@ def placar_lideres(objeto_labirinto_aleatorio, caminho_arquivo_jogadores):
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
                 if PLACAR_BACK.checarPorMouse(PLACAR_MOUSE_POS):
-                    main_menu(objeto_labirinto_aleatorio, caminho_arquivo_jogadores)
+                    main_menu(caminho_arquivo_jogadores)
 
         pg.display.update() # Modificado aqui
 
 
-def sair(objeto_labirinto_aleatorio, caminho_arquivo_jogadores):
+def sair(caminho_arquivo_jogadores):
     while True:
         SAIR_MOUSE_POS = pg.mouse.get_pos() 
 
@@ -119,7 +426,7 @@ def sair(objeto_labirinto_aleatorio, caminho_arquivo_jogadores):
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
                 if SAIR_BACK.checarPorMouse(SAIR_MOUSE_POS):
-                    main_menu(objeto_labirinto_aleatorio, caminho_arquivo_jogadores)
+                    main_menu(caminho_arquivo_jogadores)
                 if SAIR_SIM.checarPorMouse(SAIR_MOUSE_POS):
                     pg.quit() # Modificado aqui
                     sys.exit()
@@ -127,10 +434,57 @@ def sair(objeto_labirinto_aleatorio, caminho_arquivo_jogadores):
         pg.display.update() # Modificado aqui
 
 
+def pausar(caminho_arquivo_jogadores): 
+    while True:
+        PAUSAR_MOUSE_POS = pg.mouse.get_pos() # Variável renomeada
+
+        TELA.fill("BLACK") # Cor de fundo
+
+        PAUSAR_TEXT = get_font(45).render("Jogo Pausado", True, "White")
+        PAUSAR_RECT = PAUSAR_TEXT.get_rect(center=(640, 130))
+        TELA.blit(PAUSAR_TEXT, PAUSAR_RECT)
+
+        
+        PAUSAR_RETOMAR = Botao(image=None, pos=(640, 280),
+                                     text_input="RETOMAR", font=get_font(45), base_color="WHITE", hovering_color="Green")
+        PAUSAR_RETOMAR.trocarCor(PAUSAR_MOUSE_POS)
+        PAUSAR_RETOMAR.atualizar(TELA)
+
+        PAUSAR_REINICIAR = Botao(image=None, pos=(640, 340), 
+                                     text_input="REINICIAR FASE", font=get_font(45), base_color="WHITE", hovering_color="Green")
+        PAUSAR_REINICIAR.trocarCor(PAUSAR_MOUSE_POS)
+        PAUSAR_REINICIAR.atualizar(TELA)
+
+
+        PAUSAR_SAIR_MENU = Botao(image=None, pos=(640, 500), 
+                                     text_input="VOLTAR AO MENU", font=get_font(45), base_color="WHITE", hovering_color="Red")
+        
+        PAUSAR_SAIR_MENU.trocarCor(PAUSAR_MOUSE_POS)
+        PAUSAR_SAIR_MENU.atualizar(TELA)
+
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+                sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN:
+                if PAUSAR_RETOMAR.checarPorMouse(PAUSAR_MOUSE_POS):
+                    return 
+                
+            if PAUSAR_REINICIAR.checarPorMouse(PAUSAR_MOUSE_POS):
+                    return 
+
+            if PAUSAR_SAIR_MENU.checarPorMouse(PAUSAR_MOUSE_POS):
+                    main_menu(caminho_arquivo_jogadores)
+                    
+
+        pg.display.update()
+
+
+
     
 
 
-def main_menu(objeto_labirinto_aleatorio, caminho_arquivo_jogadores):
+def main_menu(caminho_arquivo_jogadores):
     while True:
         TELA.blit(BG, (0, 0))
 
@@ -158,10 +512,10 @@ def main_menu(objeto_labirinto_aleatorio, caminho_arquivo_jogadores):
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
                 if PLAY_BOTAO.checarPorMouse(MENU_MOUSE_POS):
-                    play(objeto_labirinto_aleatorio)
+                    play(caminho_arquivo_jogadores)
                 if PLACAR_LIDERES_BOTAO.checarPorMouse(MENU_MOUSE_POS):
-                    placar_lideres(objeto_labirinto_aleatorio, caminho_arquivo_jogadores)
+                    placar_lideres(caminho_arquivo_jogadores)
                 if SAIR_BOTAO.checarPorMouse(MENU_MOUSE_POS):
-                    sair(objeto_labirinto_aleatorio, caminho_arquivo_jogadores)
+                    sair(caminho_arquivo_jogadores)
 
         pg.display.update() # Modificado aqui
