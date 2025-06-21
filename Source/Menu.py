@@ -141,15 +141,15 @@ def main_menu():
 
         MENU_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
 
-        MENU_TEXT = get_font(120).render("MENU", True, "#b68f40")
+        MENU_TEXT = get_font(120).render("MENU", True, (182, 143, 64))
         MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
 
         PLAY_BOTAO = Botao(image=pg.image.load("Dados/imagens_fontes/Play Rect.png"), pos=(640, 250), # Modificado aqui
-                             text_input="JOGAR", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
+                             text_input="JOGAR", font=get_font(75), base_color=(215, 252, 212), hovering_color="White")
         OPTIONS_BOTAO = Botao(image=pg.image.load("Dados/imagens_fontes/Options Rect.png"), pos=(640, 400), # Modificado aqui
-                                text_input="ESTATÍSTICAS", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
+                                text_input="ESTATÍSTICAS", font=get_font(75), base_color=(215, 252, 212), hovering_color="White")
         SAIR_BOTAO = Botao(image=pg.image.load("Dados/imagens_fontes/Quit Rect.png"), pos=(640, 550), # Modificado aqui
-                             text_input="SAIR", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
+                             text_input="SAIR", font=get_font(75), base_color=(215, 252, 212), hovering_color="White")
 
         TELA.blit(MENU_TEXT, MENU_RECT)
 
