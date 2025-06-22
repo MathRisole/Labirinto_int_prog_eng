@@ -301,7 +301,7 @@ def aleatorio(caminho_arquivo_jogadores):
                     return
                 
                 if ALEATORIO_SELECIONAR.checarPorMouse(ALEATORIO_MOUSE_POS):
-                    #selecionar personagem já criado
+                    #selecionar personagem já criado / não sei fazer isso
                     pass
                 if ALEATORIO_CRIAR.checarPorMouse(ALEATORIO_MOUSE_POS):
                     pegar_nome_jogador(caminho_arquivo_jogadores)
