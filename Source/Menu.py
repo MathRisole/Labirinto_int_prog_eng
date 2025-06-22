@@ -467,13 +467,64 @@ def pausar(caminho_arquivo_jogadores):
                 pg.quit()
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN:
-                if PAUSAR_RETOMAR.checarPorMouse(PAUSAR_MOUSE_POS):
-                    return 
+                #if PAUSAR_RETOMAR.checarPorMouse(PAUSAR_MOUSE_POS):
+              #      implementar retomar
                 
-            if PAUSAR_REINICIAR.checarPorMouse(PAUSAR_MOUSE_POS):
-                    return 
+           #    if PAUSAR_REINICIAR.checarPorMouse(PAUSAR_MOUSE_POS):
+                #precisa ser implementado ainda
 
-            if PAUSAR_SAIR_MENU.checarPorMouse(PAUSAR_MOUSE_POS):
+                if PAUSAR_SAIR_MENU.checarPorMouse(PAUSAR_MOUSE_POS):
+                    main_menu(caminho_arquivo_jogadores)
+                    
+
+        pg.display.update()
+
+
+def tela_acabar_fase(caminho_arquivo_jogadores): 
+    while True:
+        ACABAR_MOUSE_POS = pg.mouse.get_pos() 
+
+        TELA.fill("gray") # Cor de fundo
+
+        ACABAR_TEXT = get_font(45).render("PARABÉNS, A FASE FOI FINALIZADA!", True, "White")
+        ACABAR_RECT = ACABAR_TEXT.get_rect(center=(640, 130))
+        TELA.blit(ACABAR_TEXT, ACABAR_RECT)
+
+ #       SCORE_TEXT = get_font(30).render(f"VOCÊ TEVE UM SCORE DE {}, COM UM TEMPO DE {} E {} PASSOS.", True, "White")
+ #       SCORE_RECT = SCORE_TEXT.get_rect(center=(640, 170))
+  #      TELA.blit(SCORE_TEXT, SCORE_RECT)
+
+
+        
+        ACABAR_OUTRA_FASE = Botao(image=None, pos=(640, 280),
+                                     text_input="RETOMAR", font=get_font(45), base_color="WHITE", hovering_color="Green")
+        ACABAR_OUTRA_FASE.trocarCor(ACABAR_MOUSE_POS)
+        ACABAR_OUTRA_FASE.atualizar(TELA)
+
+        ACABAR_REPETIR = Botao(image=None, pos=(640, 340), 
+                                     text_input="REINICIAR FASE", font=get_font(45), base_color="WHITE", hovering_color="Green")
+        ACABAR_REPETIR.trocarCor(ACABAR_MOUSE_POS)
+        ACABAR_REPETIR.atualizar(TELA)
+
+
+        ACABAR_SAIR_MENU = Botao(image=None, pos=(640, 500), 
+                                     text_input="VOLTAR AO MENU", font=get_font(45), base_color="WHITE", hovering_color="Red")
+        
+        ACABAR_SAIR_MENU.trocarCor(ACABAR_MOUSE_POS)
+        ACABAR_SAIR_MENU.atualizar(TELA)
+
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+                sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN:
+                if ACABAR_OUTRA_FASE.checarPorMouse(ACABAR_MOUSE_POS):
+                   play(caminho_arquivo_jogadores)
+                
+           # if ACABAR_REPETIR.checarPorMouse(ACABAR_MOUSE_POS):
+                #precisa ser implementado ainda
+
+            if ACABAR_SAIR_MENU.checarPorMouse(ACABAR_MOUSE_POS):
                     main_menu(caminho_arquivo_jogadores)
                     
 
@@ -506,11 +557,11 @@ def main_menu(caminho_arquivo_jogadores):
             botao.trocarCor(MENU_MOUSE_POS)
             botao.atualizar(TELA)
 
-        for event in pg.event.get(): # Modificado aqui
-            if event.type == pg.QUIT: # Modificado aqui
-                pg.quit() # Modificado aqui
+        for event in pg.event.get(): 
+            if event.type == pg.QUIT:
+                pg.quit() 
                 sys.exit()
-            if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
+            if event.type == pg.MOUSEBUTTONDOWN: 
                 if PLAY_BOTAO.checarPorMouse(MENU_MOUSE_POS):
                     play(caminho_arquivo_jogadores)
                 if PLACAR_LIDERES_BOTAO.checarPorMouse(MENU_MOUSE_POS):
