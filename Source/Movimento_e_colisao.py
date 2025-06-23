@@ -46,7 +46,7 @@ def rodar_aleatorio(pos_x, tamanho_lab_x, pos_y, tamanho_lab_y, velocidade, TELA
 
     labirinto.desenhar_mapa(TELA)
     rect_jogador = pygame.Rect(pos_x * labirinto.tamanho_celula, pos_y * labirinto.tamanho_celula, labirinto.tamanho_celula, labirinto.tamanho_celula)
-    pygame.draw.rect(TELA, "Azul", rect_jogador)
+    pygame.draw.rect(TELA, (66, 135, 245), rect_jogador)
 
     pygame.display.flip()
     clock.tick(FPS)  # 2. controla FPS (velocidade do jogo)

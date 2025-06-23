@@ -14,7 +14,7 @@ class Labirinto:
         # Ajustar o tamanho das células para caber dentro da janela
         tamanho_celula_x = self.largura_janela // largura
         tamanho_celula_y = self.altura_janela // altura
-        tamanho_celula = min(tamanho_celula_x, tamanho_celula_y)
+        self.tamanho_celula = min(tamanho_celula_x, tamanho_celula_y)
 
         # Cores
         self.COR_PAREDE = (40, 90, 0)
@@ -51,16 +51,16 @@ class Labirinto:
         self.mapa[self.altura - 2][self.largura - 2] = 'S'
 
     def desenhar_mapa(self, TELA):
-        for y in range(self.altura):
-            for x in range(self.largura):
+        for x in range(self.largura-2):
+            for y in range(self.altura-2):
                 rect = pygame.Rect(x * self.tamanho_celula, y * self.tamanho_celula, self.tamanho_celula, self.tamanho_celula)
-                if self.mapa[x][y] == '#':
+                if self.mapa[y][x] == '#':
                     pygame.draw.rect(TELA, self.COR_PAREDE, rect)
-                elif self.mapa[x][y] == '.':
+                elif self.mapa[y][x] == '.':
                     pygame.draw.rect(TELA, self.COR_CAMINHO, rect)
-                elif self.mapa[x][y] == 'E':
+                elif self.mapa[y][x] == 'E':
                     pygame.draw.rect(TELA, self.COR_ENTRADA, rect)
-                elif self.mapa[x][y] == 'S':
+                elif self.mapa[y][x] == 'S':
                     pygame.draw.rect(TELA, self.COR_SAIDA, rect)
 
     def rodar(self, TELA):
@@ -83,9 +83,9 @@ class Labirinto:
                 arquivo.write("".join(linha) + "\n")
 
 
-def desenhar_mapa_pronto(caminho_arquivo_fase, tamanho_celula, TELA):
+def desenhar_mapa_pronto(lab_string_inteiro, tamanho_celula, TELA):
     i=0
-    for linha in caminho_arquivo_fase:
+    for linha in lab_string_inteiro:
         for x in range(len(linha)):
             rect = pygame.Rect(x * tamanho_celula, i * tamanho_celula, tamanho_celula, tamanho_celula)
             if linha[x] == '#':

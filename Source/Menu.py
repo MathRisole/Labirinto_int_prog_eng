@@ -1,5 +1,6 @@
 import pygame as pg, sys
 from Source import Movimento_e_colisao as MC
+from Source import Gerador_labrinto as GL
 from pathlib import Path
 diretorio_base = Path.cwd()
 
@@ -254,7 +255,8 @@ def pegar_nome_jogador(caminho_arquivo_jogadores, diretorio_base):
                 sys.exit()
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_RETURN: 
-                    input_active = False 
+                    input_active = False
+                    return nome_jogador
                 elif event.key == pg.K_BACKSPACE: 
                     nome_jogador = nome_jogador[:-1] 
                 else:
@@ -275,12 +277,11 @@ def pegar_nome_jogador(caminho_arquivo_jogadores, diretorio_base):
 
         pg.display.update()
 
-    return nome_jogador
-
 
 
 def aleatorio(caminho_arquivo_jogadores, diretorio_base):
     while True:
+        lab_aleatorio = GL.Labirinto(55, 31)
         ALEATORIO_MOUSE_POS = pg.mouse.get_pos()
 
         TELA.fill("white")
@@ -320,7 +321,10 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
                     #selecionar personagem já criado / não sei fazer isso
                     pass
                 if ALEATORIO_CRIAR.checarPorMouse(ALEATORIO_MOUSE_POS):
-                    pegar_nome_jogador(caminho_arquivo_jogadores, diretorio_base)
+                    username = pegar_nome_jogador(caminho_arquivo_jogadores, diretorio_base)
+                    with open(caminho_arquivo_jogadores, "a", encoding="utf-8") as arq_jogadores_usavel:
+                        arq_jogadores_usavel.write(username)
+                    MC.rodar_aleatorio(1, lab_aleatorio.largura, 1, lab_aleatorio.altura, 1, TELA, lab_aleatorio)
                   
         pg.display.update()
 
