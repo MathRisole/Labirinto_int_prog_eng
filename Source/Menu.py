@@ -80,7 +80,8 @@ def facil(caminho_arquivo_jogadores, diretorio_base):
                     campanha(caminho_arquivo_jogadores, diretorio_base)
                 if FACIL_UM.checarPorMouse(FACIL_MOUSE_POS):
                     with open(diretorio_base/'Dados'/'fases'/'fase_01.txt') as arq_facil_1:
-                        MC.rodar_pronto(1, 19, 1, 19, 1, TELA, arq_facil_1)
+                        MC.jogar_fase_pronta(1, 19, 1, 19, 1, TELA, arq_facil_1)
+
 
 
         pg.display.update() # Modificado aqui
