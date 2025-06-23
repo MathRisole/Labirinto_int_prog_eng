@@ -36,7 +36,6 @@ class Botao():
 
 pg.init()
 
-
 TELA = pg.display.set_mode((1280, 720))
 pg.display.set_caption("Labirinto") # Modificado aqui
 
@@ -44,6 +43,7 @@ BG = pg.image.load("Dados/imagens_fontes/Background.png") # Modificado aqui
 
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pg.font.Font("Dados/imagens_fontes/font.ttf", size) # Modificado aqui
+
 
 
 def facil(caminho_arquivo_jogadores, diretorio_base):
@@ -84,6 +84,8 @@ def facil(caminho_arquivo_jogadores, diretorio_base):
 
 
         pg.display.update() # Modificado aqui
+
+
 
 def medio(caminho_arquivo_jogadores, diretorio_base):
     while True:
@@ -133,6 +135,7 @@ def medio(caminho_arquivo_jogadores, diretorio_base):
         pg.display.update() # Modificado aqui
 
 
+
 def dificil(caminho_arquivo_jogadores, diretorio_base):
     while True:
         DIFICIL_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
@@ -175,6 +178,8 @@ def dificil(caminho_arquivo_jogadores, diretorio_base):
 
 
         pg.display.update() # Modificado aqui
+
+
 
 def campanha(caminho_arquivo_jogadores, diretorio_base):
     while True:
@@ -231,6 +236,7 @@ def campanha(caminho_arquivo_jogadores, diretorio_base):
         pg.display.update() # Modificado aqui
 
 
+
 def pegar_nome_jogador(caminho_arquivo_jogadores, diretorio_base):
     nome_jogador = ""
     entrada_ativa = True
@@ -265,6 +271,7 @@ def pegar_nome_jogador(caminho_arquivo_jogadores, diretorio_base):
         pg.display.update()
 
     return nome_jogador
+
 
 
 def aleatorio(caminho_arquivo_jogadores, diretorio_base):
@@ -311,7 +318,6 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
                     pegar_nome_jogador(caminho_arquivo_jogadores, diretorio_base)
                   
         pg.display.update()
-
 
 
 
@@ -362,6 +368,8 @@ def play(caminho_arquivo_jogadores, diretorio_base):
                     
         pg.display.update() # Modificado aqui
 
+
+
 def placar_lideres(caminho_arquivo_jogadores, diretorio_base):
     while True:
         PLACAR_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
@@ -403,6 +411,7 @@ def placar_lideres(caminho_arquivo_jogadores, diretorio_base):
         pg.display.update() # Modificado aqui
 
 
+
 def sair(caminho_arquivo_jogadores, diretorio_base):
     while True:
         SAIR_MOUSE_POS = pg.mouse.get_pos() 
@@ -436,6 +445,7 @@ def sair(caminho_arquivo_jogadores, diretorio_base):
                     sys.exit()
 
         pg.display.update() # Modificado aqui
+
 
 
 def pausar(caminho_arquivo_jogadores, diretorio_base): 
@@ -482,6 +492,7 @@ def pausar(caminho_arquivo_jogadores, diretorio_base):
                     
 
         pg.display.update()
+
 
 
 def tela_acabar_fase(caminho_arquivo_jogadores, diretorio_base): 
@@ -534,9 +545,6 @@ def tela_acabar_fase(caminho_arquivo_jogadores, diretorio_base):
 
         pg.display.update()
 
-
-
-    
 
 
 def main_menu(caminho_arquivo_jogadores, diretorio_base):

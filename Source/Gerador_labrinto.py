@@ -1,6 +1,7 @@
 import pygame
 import random
 
+
 class Labirinto:
     def __init__(self, largura, altura):
         self.largura = largura
@@ -81,21 +82,24 @@ class Labirinto:
             for linha in self.mapa:
                 arquivo.write("".join(linha) + "\n")
 
+
 def desenhar_mapa_pronto(caminho_arquivo_fase, tamanho_celula, TELA):
     i=0
     for linha in caminho_arquivo_fase:
-            for x in range(len(linha)):
-                rect = pygame.Rect(x * tamanho_celula, i * tamanho_celula, tamanho_celula, tamanho_celula)
-                if linha[x] == '#':
-                    pygame.draw.rect(TELA, (40, 90, 0), rect)
-                elif linha[x] == '.':
-                    pygame.draw.rect(TELA, (255, 255, 255), rect)
-                elif linha[x] == 'E':
-                    pygame.draw.rect(TELA, (0, 255, 0), rect)
-                elif linha[x] == 'S':
-                    pygame.draw.rect(TELA, (255, 0, 0), rect)
-                i+=1
-# pra chamar essa função:
+        for x in range(len(linha)):
+            rect = pygame.Rect(x * tamanho_celula, i * tamanho_celula, tamanho_celula, tamanho_celula)
+            if linha[x] == '#':
+                pygame.draw.rect(TELA, (40, 90, 0), rect)
+            elif linha[x] == '.':
+                pygame.draw.rect(TELA, (255, 255, 255), rect)
+            elif linha[x] == 'E':
+                pygame.draw.rect(TELA, (0, 255, 0), rect)
+            elif linha[x] == 'S':
+                pygame.draw.rect(TELA, (255, 0, 0), rect)
+        i+=1
+
+
+#pra chamar essa função:
 #lab = Labirinto(x, y) #lembra que o labirinto tem que ter largura e altura ímpares
 #lab.gerar_labirinto()
 #lab.rodar()
