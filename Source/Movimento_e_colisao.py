@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 from Source import Gerador_labrinto as GL
 
 # 1. Velocidade do movimento: mover 1 célula por passo
@@ -55,16 +55,16 @@ def rodar_pronto(pos_x, tamanho_lab_x, pos_y, tamanho_lab_y, velocidade, TELA, l
     tamanho_celula = min(tamanho_lab_x, tamanho_lab_y)
     novo_x, novo_y = pos_x, pos_y
 
-    if teclas[pygame.K_LEFT]:
+    if teclas[pygame.K_a]:
         if pode_mover_pronto(pos_x - velocidade, tamanho_lab_x, pos_y, tamanho_lab_y, lab_linhas):
             novo_x = pos_x - velocidade
-    elif teclas[pygame.K_RIGHT]:
+    elif teclas[pygame.K_d]:
         if pode_mover_pronto(pos_x + velocidade, tamanho_lab_x, pos_y, tamanho_lab_y, lab_linhas):
             novo_x = pos_x + velocidade
-    elif teclas[pygame.K_UP]:
+    elif teclas[pygame.K_w]:
         if pode_mover_pronto(pos_x, tamanho_lab_x, pos_y - velocidade, tamanho_lab_y, lab_linhas):
             novo_y = pos_y - velocidade
-    elif teclas[pygame.K_DOWN]:
+    elif teclas[pygame.K_s]:
         if pode_mover_pronto(pos_x, tamanho_lab_x, pos_y + velocidade, tamanho_lab_y, lab_linhas):
             novo_y = pos_y + velocidade
 
