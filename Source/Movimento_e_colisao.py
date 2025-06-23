@@ -15,11 +15,9 @@ def pode_mover(x, tamanho_lab_x, y, tamanho_lab_y, labirinto):
         return labirinto.mapa[y][x] != '#'
     return False
 
-def pode_mover_pronto(x, tamanho_lab_x, y, tamanho_lab_y, caminho_arquivo_fase):
-    lab_string_inteiro = caminho_arquivo_fase.read()
-    lab_string_separado = lab_string_inteiro.split("\n")
+def pode_mover_pronto(x, tamanho_lab_x, y, tamanho_lab_y, lab_linhas):
     if 0 <= x < tamanho_lab_x and 0 <= y < tamanho_lab_y:
-        return lab_string_separado[y][x] != '#'
+        return lab_linhas[y][x] != '#'
     return False
 
 clock = pygame.time.Clock()
