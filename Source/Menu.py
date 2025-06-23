@@ -1,4 +1,7 @@
 import pygame as pg, sys
+from Source import Movimento_e_colisao as MC
+from pathlib import Path
+diretorio_base = Path.cwd()
 
 #criar a classe de um botão
 class Botao():
@@ -43,7 +46,7 @@ def get_font(size): # Returns Press-Start-2P in the desired size
     return pg.font.Font("Dados/imagens_fontes/font.ttf", size) # Modificado aqui
 
 
-def facil(caminho_arquivo_jogadores):
+def facil(caminho_arquivo_jogadores, diretorio_base):
     while True:
         FACIL_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
 
@@ -74,15 +77,15 @@ def facil(caminho_arquivo_jogadores):
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
                 if FACIL_BACK.checarPorMouse(FACIL_MOUSE_POS):
-                    campanha(caminho_arquivo_jogadores)
+                    campanha(caminho_arquivo_jogadores, diretorio_base)
                 if FACIL_UM.checarPorMouse(FACIL_MOUSE_POS):
-                    with open(base_dir/'Dados'/'fases'/'fase_01') as arq_facil_1:
+                    with open(diretorio_base/'Dados'/'fases'/'fase_01.txt') as arq_facil_1:
                         MC.rodar_pronto(1, 19, 1, 19, 1, TELA, arq_facil_1)
 
 
         pg.display.update() # Modificado aqui
 
-def medio(caminho_arquivo_jogadores):
+def medio(caminho_arquivo_jogadores, diretorio_base):
     while True:
         MEDIO_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
 
@@ -119,7 +122,7 @@ def medio(caminho_arquivo_jogadores):
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
                 if MEDIO_BACK.checarPorMouse(MEDIO_MOUSE_POS):
-                    campanha(caminho_arquivo_jogadores)
+                    campanha(caminho_arquivo_jogadores, diretorio_base)
  #                 if MEDIO_UM.checarPorMouse(MEDIO_MOUSE_POS):
  #                     #INICIAL FASE M1
   #                 if MEDIO_UM.checarPorMouse(MEDIO_MOUSE_POS):
@@ -130,7 +133,7 @@ def medio(caminho_arquivo_jogadores):
         pg.display.update() # Modificado aqui
 
 
-def dificil(caminho_arquivo_jogadores):
+def dificil(caminho_arquivo_jogadores, diretorio_base):
     while True:
         DIFICIL_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
 
@@ -164,7 +167,7 @@ def dificil(caminho_arquivo_jogadores):
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
                 if DIFICIL_BACK.checarPorMouse(DIFICIL_MOUSE_POS):
-                    campanha(caminho_arquivo_jogadores)
+                    campanha(caminho_arquivo_jogadores, diretorio_base)
  #                 if DIFICIL_UM.checarPorMouse(DIFICIL_MOUSE_POS):
  #                     #INICIAL FASE D1
   #                 if DIFICIL_DOIS.checarPorMouse(DIFICIL_MOUSE_POS):
@@ -173,7 +176,7 @@ def dificil(caminho_arquivo_jogadores):
 
         pg.display.update() # Modificado aqui
 
-def campanha(caminho_arquivo_jogadores):
+def campanha(caminho_arquivo_jogadores, diretorio_base):
     while True:
         CAMPANHA_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
 
@@ -217,18 +220,18 @@ def campanha(caminho_arquivo_jogadores):
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
                 if CAMPANHA_BACK.checarPorMouse(CAMPANHA_MOUSE_POS):
-                    play(caminho_arquivo_jogadores)
+                    play(caminho_arquivo_jogadores, diretorio_base)
                 if CAMPANHA_FACIL.checarPorMouse(CAMPANHA_MOUSE_POS):
-                    facil(caminho_arquivo_jogadores)
+                    facil(caminho_arquivo_jogadores, diretorio_base)
                 if CAMPANHA_MEDIO.checarPorMouse(CAMPANHA_MOUSE_POS):
-                    medio(caminho_arquivo_jogadores)
+                    medio(caminho_arquivo_jogadores, diretorio_base)
                 if CAMPANHA_DIFICIL.checarPorMouse(CAMPANHA_MOUSE_POS):
-                    dificil(caminho_arquivo_jogadores)
+                    dificil(caminho_arquivo_jogadores, diretorio_base)
 
         pg.display.update() # Modificado aqui
 
 
-def pegar_nome_jogador(caminho_arquivo_jogadores):
+def pegar_nome_jogador(caminho_arquivo_jogadores, diretorio_base):
     nome_jogador = ""
     entrada_ativa = True
     tamanho_maximo = 15 
@@ -264,7 +267,7 @@ def pegar_nome_jogador(caminho_arquivo_jogadores):
     return nome_jogador
 
 
-def aleatorio(caminho_arquivo_jogadores):
+def aleatorio(caminho_arquivo_jogadores, diretorio_base):
     while True:
         ALEATORIO_MOUSE_POS = pg.mouse.get_pos()
 
@@ -298,21 +301,21 @@ def aleatorio(caminho_arquivo_jogadores):
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN:
                 if ALEATORIO_BACK.checarPorMouse(ALEATORIO_MOUSE_POS):
-                    play(caminho_arquivo_jogadores)
+                    play(caminho_arquivo_jogadores, diretorio_base)
                     return
                 
                 if ALEATORIO_SELECIONAR.checarPorMouse(ALEATORIO_MOUSE_POS):
                     #selecionar personagem já criado / não sei fazer isso
                     pass
                 if ALEATORIO_CRIAR.checarPorMouse(ALEATORIO_MOUSE_POS):
-                    pegar_nome_jogador(caminho_arquivo_jogadores)
+                    pegar_nome_jogador(caminho_arquivo_jogadores, diretorio_base)
                   
         pg.display.update()
 
 
 
 
-def play(caminho_arquivo_jogadores):
+def play(caminho_arquivo_jogadores, diretorio_base):
     while True:
         PLAY_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
 
@@ -350,16 +353,16 @@ def play(caminho_arquivo_jogadores):
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
                 if PLAY_BACK.checarPorMouse(PLAY_MOUSE_POS):
-                    main_menu(caminho_arquivo_jogadores)
+                    main_menu(caminho_arquivo_jogadores, diretorio_base)
                 if PLAY_CAMPANHA.checarPorMouse(PLAY_MOUSE_POS):
-                     campanha(caminho_arquivo_jogadores)
+                     campanha(caminho_arquivo_jogadores, diretorio_base)
 
                 if PLAY_ALEATORIO.checarPorMouse(PLAY_MOUSE_POS):
-                    aleatorio(caminho_arquivo_jogadores)
+                    aleatorio(caminho_arquivo_jogadores, diretorio_base)
                     
         pg.display.update() # Modificado aqui
 
-def placar_lideres( caminho_arquivo_jogadores):
+def placar_lideres(caminho_arquivo_jogadores, diretorio_base):
     while True:
         PLACAR_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
 
@@ -395,12 +398,12 @@ def placar_lideres( caminho_arquivo_jogadores):
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
                 if PLACAR_BACK.checarPorMouse(PLACAR_MOUSE_POS):
-                    main_menu(caminho_arquivo_jogadores)
+                    main_menu(caminho_arquivo_jogadores, diretorio_base)
 
         pg.display.update() # Modificado aqui
 
 
-def sair(caminho_arquivo_jogadores):
+def sair(caminho_arquivo_jogadores, diretorio_base):
     while True:
         SAIR_MOUSE_POS = pg.mouse.get_pos() 
 
@@ -427,7 +430,7 @@ def sair(caminho_arquivo_jogadores):
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
                 if SAIR_BACK.checarPorMouse(SAIR_MOUSE_POS):
-                    main_menu(caminho_arquivo_jogadores)
+                    main_menu(caminho_arquivo_jogadores, diretorio_base)
                 if SAIR_SIM.checarPorMouse(SAIR_MOUSE_POS):
                     pg.quit() # Modificado aqui
                     sys.exit()
@@ -435,7 +438,7 @@ def sair(caminho_arquivo_jogadores):
         pg.display.update() # Modificado aqui
 
 
-def pausar(caminho_arquivo_jogadores): 
+def pausar(caminho_arquivo_jogadores, diretorio_base): 
     while True:
         PAUSAR_MOUSE_POS = pg.mouse.get_pos() # Variável renomeada
 
@@ -475,13 +478,13 @@ def pausar(caminho_arquivo_jogadores):
                 #precisa ser implementado ainda
 
                 if PAUSAR_SAIR_MENU.checarPorMouse(PAUSAR_MOUSE_POS):
-                    main_menu(caminho_arquivo_jogadores)
+                    main_menu(caminho_arquivo_jogadores, diretorio_base)
                     
 
         pg.display.update()
 
 
-def tela_acabar_fase(caminho_arquivo_jogadores): 
+def tela_acabar_fase(caminho_arquivo_jogadores, diretorio_base): 
     while True:
         ACABAR_MOUSE_POS = pg.mouse.get_pos() 
 
@@ -520,13 +523,13 @@ def tela_acabar_fase(caminho_arquivo_jogadores):
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN:
                 if ACABAR_OUTRA_FASE.checarPorMouse(ACABAR_MOUSE_POS):
-                   play(caminho_arquivo_jogadores)
+                   play(caminho_arquivo_jogadores, diretorio_base)
                 
            # if ACABAR_REPETIR.checarPorMouse(ACABAR_MOUSE_POS):
                 #precisa ser implementado ainda
 
             if ACABAR_SAIR_MENU.checarPorMouse(ACABAR_MOUSE_POS):
-                    main_menu(caminho_arquivo_jogadores)
+                    main_menu(caminho_arquivo_jogadores, diretorio_base)
                     
 
         pg.display.update()
@@ -536,7 +539,7 @@ def tela_acabar_fase(caminho_arquivo_jogadores):
     
 
 
-def main_menu(caminho_arquivo_jogadores):
+def main_menu(caminho_arquivo_jogadores, diretorio_base):
     while True:
         TELA.blit(BG, (0, 0))
 
@@ -564,10 +567,10 @@ def main_menu(caminho_arquivo_jogadores):
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN: 
                 if PLAY_BOTAO.checarPorMouse(MENU_MOUSE_POS):
-                    play(caminho_arquivo_jogadores)
+                    play(caminho_arquivo_jogadores, diretorio_base)
                 if PLACAR_LIDERES_BOTAO.checarPorMouse(MENU_MOUSE_POS):
-                    placar_lideres(caminho_arquivo_jogadores)
+                    placar_lideres(caminho_arquivo_jogadores, diretorio_base)
                 if SAIR_BOTAO.checarPorMouse(MENU_MOUSE_POS):
-                    sair(caminho_arquivo_jogadores)
+                    sair(caminho_arquivo_jogadores, diretorio_base)
 
         pg.display.update() # Modificado aqui

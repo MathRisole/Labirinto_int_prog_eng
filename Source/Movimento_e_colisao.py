@@ -1,4 +1,5 @@
 import pygame
+from Source import Gerador_labrinto as GL
 
 # 1. Velocidade do movimento: mover 1 célula por passo
 velocidade = 1  # número de células por movimento
@@ -76,7 +77,7 @@ def rodar_pronto(pos_x, tamanho_lab_x, pos_y, tamanho_lab_y, velocidade, TELA, c
 
     GL.desenhar_mapa_pronto(caminho_arquivo_fase, tamanho_celula, TELA)
     rect_jogador = pygame.Rect(pos_x * tamanho_celula, pos_y * tamanho_celula, tamanho_celula, tamanho_celula)
-    pygame.draw.rect(TELA, "Azul", rect_jogador)
+    pygame.draw.rect(TELA, (66, 135, 245), rect_jogador)
 
     pygame.display.flip()
     clock.tick(FPS)  # 2. controla FPS (velocidade do jogo)
