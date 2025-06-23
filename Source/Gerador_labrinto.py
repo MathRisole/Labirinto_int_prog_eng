@@ -13,7 +13,7 @@ class Labirinto:
         # Ajustar o tamanho das células para caber dentro da janela
         tamanho_celula_x = self.largura_janela // largura
         tamanho_celula_y = self.altura_janela // altura
-        self.tamanho_celula = min(tamanho_celula_x, tamanho_celula_y)
+        tamanho_celula = min(tamanho_celula_x, tamanho_celula_y)
 
         # Cores
         self.COR_PAREDE = (40, 90, 0)
@@ -49,20 +49,20 @@ class Labirinto:
         # Criar saída
         self.mapa[self.altura - 2][self.largura - 2] = 'S'
 
-    def desenhar_mapa(self, screen):
+    def desenhar_mapa(self, TELA):
         for y in range(self.altura):
             for x in range(self.largura):
                 rect = pygame.Rect(x * self.tamanho_celula, y * self.tamanho_celula, self.tamanho_celula, self.tamanho_celula)
-                if self.mapa[y][x] == '#':
-                    pygame.draw.rect(screen, self.COR_PAREDE, rect)
-                elif self.mapa[y][x] == '.':
-                    pygame.draw.rect(screen, self.COR_CAMINHO, rect)
-                elif self.mapa[y][x] == 'E':
-                    pygame.draw.rect(screen, self.COR_ENTRADA, rect)
-                elif self.mapa[y][x] == 'S':
-                    pygame.draw.rect(screen, self.COR_SAIDA, rect)
+                if self.mapa[x][y] == '#':
+                    pygame.draw.rect(TELA, self.COR_PAREDE, rect)
+                elif self.mapa[x][y] == '.':
+                    pygame.draw.rect(TELA, self.COR_CAMINHO, rect)
+                elif self.mapa[x][y] == 'E':
+                    pygame.draw.rect(TELA, self.COR_ENTRADA, rect)
+                elif self.mapa[x][y] == 'S':
+                    pygame.draw.rect(TELA, self.COR_SAIDA, rect)
 
-    def rodar(self, screen):
+    def rodar(self, TELA):
         
         rodando = True
         while rodando:
@@ -70,8 +70,8 @@ class Labirinto:
                 if evento.type == pygame.QUIT:
                     rodando = False
 
-            screen.fill(self.COR_PAREDE)
-            self.desenhar_mapa(screen)
+            TELA.fill(self.COR_PAREDE)
+            self.desenhar_mapa(TELA)
             pygame.display.flip()
         pygame.quit()
 
@@ -81,6 +81,19 @@ class Labirinto:
             for linha in self.mapa:
                 arquivo.write("".join(linha) + "\n")
 
+def desenhar_mapa_pronto(caminho_arquivo_fase, tamanho_celula, TELA):
+    with open(caminho_arquivo_fase, "r"):
+        for linha in caminho_arquivo_fase:
+                for x in range(len(linha)):
+                    rect = pygame.Rect(x * tamanho_celula, y * tamanho_celula, tamanho_celula, tamanho_celula)
+                    if linha[x] == '#':
+                        pygame.draw.rect(TELA, (40, 90, 0), rect)
+                    elif linha[x] == '.':
+                        pygame.draw.rect(TELA, (255, 255, 255), rect)
+                    elif linha[x] == 'E':
+                        pygame.draw.rect(TELA, (0, 255, 0), rect)
+                    elif linha[x] == 'S':
+                        pygame.draw.rect(TELA, (255, 0, 0), rect)
 # pra chamar essa função:
 #lab = Labirinto(x, y) #lembra que o labirinto tem que ter largura e altura ímpares
 #lab.gerar_labirinto()

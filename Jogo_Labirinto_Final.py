@@ -6,4 +6,5 @@ base_dir = Path.cwd()
 
 lab_aleatorio = GL.Labirinto(55, 31)
 
-Menu.main_menu( base_dir/'Dados'/'jogadores.txt')
+
+Menu.main_menu(base_dir/'Dados'/'jogadores.txt')

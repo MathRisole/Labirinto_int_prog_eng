@@ -75,8 +75,9 @@ def facil(caminho_arquivo_jogadores):
             if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
                 if FACIL_BACK.checarPorMouse(FACIL_MOUSE_POS):
                     campanha(caminho_arquivo_jogadores)
- #                 if FACIL_UM.checarPorMouse(MEDIO_MOUSE_POS):
- #                     #INICIAL FASE M1
+                if FACIL_UM.checarPorMouse(FACIL_MOUSE_POS):
+                    with open(base_dir/'Dados'/'fases'/'fase_01') as arq_facil_1:
+                        MC.rodar_pronto(1, 19, 1, 19, 1, TELA, arq_facil_1)
 
 
         pg.display.update() # Modificado aqui
