@@ -50,18 +50,21 @@ class Labirinto:
         # Criar saída
         self.mapa[self.altura - 2][self.largura - 2] = 'S'
 
-    def desenhar_mapa(self, TELA):
-        for x in range(self.largura-2):
-            for y in range(self.altura-2):
-                rect = pygame.Rect(x * self.tamanho_celula, y * self.tamanho_celula, self.tamanho_celula, self.tamanho_celula)
-                if self.mapa[y][x] == '#':
-                    pygame.draw.rect(TELA, self.COR_PAREDE, rect)
-                elif self.mapa[y][x] == '.':
-                    pygame.draw.rect(TELA, self.COR_CAMINHO, rect)
-                elif self.mapa[y][x] == 'E':
-                    pygame.draw.rect(TELA, self.COR_ENTRADA, rect)
-                elif self.mapa[y][x] == 'S':
-                    pygame.draw.rect(TELA, self.COR_SAIDA, rect)
+    def desenhar_mapa(self, TELA, margem_x=0, margem_y=0):
+        for y in range(self.altura):
+            for x in range(self.largura):
+                cor = (0, 0, 0) if self.mapa[y][x] == '#' else (255, 255, 255)
+                pygame.draw.rect(
+                    TELA,
+                    cor,
+                    pygame.Rect(
+                        margem_x + x * self.tamanho_celula,
+                        margem_y + y * self.tamanho_celula,
+                        self.tamanho_celula,
+                        self.tamanho_celula
+                    )
+                )
+
 
     def rodar(self, TELA):
         

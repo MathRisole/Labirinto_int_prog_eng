@@ -27,6 +27,7 @@ def rodar_aleatorio(pos_x, tamanho_lab_x, pos_y, tamanho_lab_y, velocidade, TELA
     teclas = pygame.key.get_pressed()
     novo_x, novo_y = pos_x, pos_y
 
+    
     # 3. Movimento discreto: mover 1 célula por vez (velocidade=1)
     if teclas[pygame.K_LEFT]:
         if pode_mover(pos_x - velocidade, tamanho_lab_x, pos_y, tamanho_lab_y, labirinto):
@@ -40,16 +41,16 @@ def rodar_aleatorio(pos_x, tamanho_lab_x, pos_y, tamanho_lab_y, velocidade, TELA
     elif teclas[pygame.K_DOWN]:
         if pode_mover(pos_x, tamanho_lab_x, pos_y + velocidade, tamanho_lab_y, labirinto):
             novo_y = pos_y + velocidade
-
+    
     # 4. Colisão simples: só move se a célula destino não for parede
     pos_x, pos_y = novo_x, novo_y
 
     labirinto.desenhar_mapa(TELA)
     rect_jogador = pygame.Rect(pos_x * labirinto.tamanho_celula, pos_y * labirinto.tamanho_celula, labirinto.tamanho_celula, labirinto.tamanho_celula)
     pygame.draw.rect(TELA, (66, 135, 245), rect_jogador)
-
     pygame.display.flip()
     clock.tick(FPS)  # 2. controla FPS (velocidade do jogo)
+
 
 def rodar_pronto(pos_x, tamanho_lab_x, pos_y, tamanho_lab_y, velocidade, TELA, lab_linhas, teclas):
     tamanho_celula = min(tamanho_lab_x, tamanho_lab_y)

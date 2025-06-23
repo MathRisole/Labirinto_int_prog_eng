@@ -2,6 +2,8 @@ import pygame as pg, sys
 from Source import Movimento_e_colisao as MC
 from Source import Gerador_labrinto as GL
 from pathlib import Path
+import time 
+
 diretorio_base = Path.cwd()
 
 #criar a classe de um botão
@@ -284,27 +286,24 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
         lab_aleatorio = GL.Labirinto(55, 31)
         ALEATORIO_MOUSE_POS = pg.mouse.get_pos()
 
-        TELA.fill("white")
+        TELA.fill((0, 0, 0))  # Cor de fundo igual a cor da parede (exemplo: preto)
 
-        ALEATORIO_TEXT = get_font(45).render("Modo Aleatório", True, "Black")
+        ALEATORIO_TEXT = get_font(45).render("Modo Aleatório", True, "White")
         ALEATORIO_RECT = ALEATORIO_TEXT.get_rect(center=(640, 120))
         TELA.blit(ALEATORIO_TEXT, ALEATORIO_RECT)
 
         ALEATORIO_SELECIONAR = Botao(image=None, pos=(640, 330),
-                                         text_input="Selecionar usuário existente", font=get_font(43), base_color="Black", hovering_color="blue")
-
+                                     text_input="Selecionar usuário existente", font=get_font(43), base_color="White", hovering_color="blue")
         ALEATORIO_SELECIONAR.trocarCor(ALEATORIO_MOUSE_POS)
         ALEATORIO_SELECIONAR.atualizar(TELA)
 
         ALEATORIO_CRIAR = Botao(image=None, pos=(640, 440),
-                                         text_input="Criar usuário", font=get_font(43), base_color="Black", hovering_color="Red")
-
+                                text_input="Criar usuário", font=get_font(43), base_color="White", hovering_color="Red")
         ALEATORIO_CRIAR.trocarCor(ALEATORIO_MOUSE_POS)
         ALEATORIO_CRIAR.atualizar(TELA)
 
         ALEATORIO_BACK = Botao(image=None, pos=(200, 560),
-                                         text_input="VOLTAR", font=get_font(30), base_color="Black", hovering_color="Purple")
-
+                               text_input="VOLTAR", font=get_font(30), base_color="White", hovering_color="Purple")
         ALEATORIO_BACK.trocarCor(ALEATORIO_MOUSE_POS)
         ALEATORIO_BACK.atualizar(TELA)
 
@@ -317,15 +316,78 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
                     play(caminho_arquivo_jogadores, diretorio_base)
                     return
                 
-                if ALEATORIO_SELECIONAR.checarPorMouse(ALEATORIO_MOUSE_POS):
-                    #selecionar personagem já criado / não sei fazer isso
-                    pass
                 if ALEATORIO_CRIAR.checarPorMouse(ALEATORIO_MOUSE_POS):
                     username = pegar_nome_jogador(caminho_arquivo_jogadores, diretorio_base)
                     with open(caminho_arquivo_jogadores, "a", encoding="utf-8") as arq_jogadores_usavel:
-                        arq_jogadores_usavel.write(username)
-                    MC.rodar_aleatorio(1, lab_aleatorio.largura, 1, lab_aleatorio.altura, 1, TELA, lab_aleatorio)
-                  
+                        arq_jogadores_usavel.write(username + "\n")
+
+                    pos_x, pos_y = 1, 1
+                    pontuacao = 10000
+                    tempo_inicio = time.time()
+                    ultimo_tempo = tempo_inicio
+                    clock = pg.time.Clock()
+
+                    # --- Cálculo para centralizar o labirinto ---
+                    margem_x = (TELA.get_width() - lab_aleatorio.largura * lab_aleatorio.tamanho_celula) // 2
+                    margem_y = (TELA.get_height() - lab_aleatorio.altura * lab_aleatorio.tamanho_celula) // 2
+
+                    rodando_labirinto = True
+                    while rodando_labirinto:
+                        TELA.fill((0, 0, 0))  # Fundo da tela da mesma cor da parede (exemplo: preto)
+
+                        tempo_atual = time.time()
+                        if tempo_atual - ultimo_tempo >= 1:
+                            pontuacao -= 100
+                            ultimo_tempo = tempo_atual
+
+                        for event in pg.event.get():
+                            if event.type == pg.QUIT:
+                                pg.quit()
+                                sys.exit()
+                            if event.type == pg.KEYDOWN:
+                                if event.key == pg.K_ESCAPE:
+                                    rodando_labirinto = False
+
+                        teclas = pg.key.get_pressed()
+                        novo_x, novo_y = pos_x, pos_y
+
+                        if teclas[pg.K_LEFT]:
+                            if MC.pode_mover(pos_x - 1, lab_aleatorio.largura, pos_y, lab_aleatorio.altura, lab_aleatorio):
+                                novo_x = pos_x - 1
+                        elif teclas[pg.K_RIGHT]:
+                            if MC.pode_mover(pos_x + 1, lab_aleatorio.largura, pos_y, lab_aleatorio.altura, lab_aleatorio):
+                                novo_x = pos_x + 1
+                        elif teclas[pg.K_UP]:
+                            if MC.pode_mover(pos_x, lab_aleatorio.largura, pos_y - 1, lab_aleatorio.altura, lab_aleatorio):
+                                novo_y = pos_y - 1
+                        elif teclas[pg.K_DOWN]:
+                            if MC.pode_mover(pos_x, lab_aleatorio.largura, pos_y + 1, lab_aleatorio.altura, lab_aleatorio):
+                                novo_y = pos_y + 1
+
+                        if (novo_x != pos_x) or (novo_y != pos_y):
+                            pontuacao -= 50
+                        pos_x, pos_y = novo_x, novo_y
+
+                        # --- Desenhar o labirinto centralizado ---
+                        lab_aleatorio.desenhar_mapa(TELA, margem_x, margem_y)
+
+                        # --- Desenhar o jogador também centralizado ---
+                        rect_jogador = pg.Rect(
+                            margem_x + pos_x * lab_aleatorio.tamanho_celula,
+                            margem_y + pos_y * lab_aleatorio.tamanho_celula,
+                            lab_aleatorio.tamanho_celula,
+                            lab_aleatorio.tamanho_celula
+                        )
+                        pg.draw.rect(TELA, (66, 135, 245), rect_jogador)
+
+                        # --- Exibir pontuação ---
+                        fonte = pg.font.SysFont(None, 36)
+                        texto_pontuacao = fonte.render(f"Pontos: {max(pontuacao, 0)}", True, (255, 255, 255))
+                        TELA.blit(texto_pontuacao, (10, 10))
+
+                        pg.display.update()
+                        clock.tick(10)
+
         pg.display.update()
 
 
