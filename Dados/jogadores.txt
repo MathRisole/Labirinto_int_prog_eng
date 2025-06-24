@@ -10,3 +10,4 @@ wasd 66300
 polado 79700
 das 68700
 sd 79200
+as sad asd 

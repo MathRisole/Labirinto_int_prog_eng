@@ -12,8 +12,8 @@ class Labirinto:
         self.altura_janela = 720
 
         # Ajustar o tamanho das células para caber dentro da janela
-        tamanho_celula_x = self.largura_janela // largura
-        tamanho_celula_y = self.altura_janela // altura
+        tamanho_celula_x = 20
+        tamanho_celula_y = 20
         self.tamanho_celula = min(tamanho_celula_x, tamanho_celula_y)
 
         # Cores
@@ -65,10 +65,10 @@ class Labirinto:
                     TELA,
                     cor,
                     pygame.Rect(
-                        margem_x + x * self.tamanho_celula,
-                        margem_y + y * self.tamanho_celula,
-                        self.tamanho_celula,
-                        self.tamanho_celula
+                        margem_x + x * 20,
+                        margem_y + y * 20,
+                        20,
+                        20
                     )
                 )
 
@@ -97,15 +97,38 @@ def desenhar_mapa_pronto(lab_string_inteiro, tamanho_celula, TELA):
     i=0
     for linha in lab_string_inteiro:
         for x in range(len(linha)):
-            rect = pygame.Rect(x * tamanho_celula, i * tamanho_celula, tamanho_celula, tamanho_celula)
-            if linha[x] == '#':
-                pygame.draw.rect(TELA, (40, 90, 0), rect)
-            elif linha[x] == '.':
-                pygame.draw.rect(TELA, (255, 255, 255), rect)
-            elif linha[x] == 'E':
-                pygame.draw.rect(TELA, (0, 255, 0), rect)
-            elif linha[x] == 'S':
-                pygame.draw.rect(TELA, (255, 0, 0), rect)
+            if len((lab_string_inteiro)) <=9:
+                rect = pygame.Rect(x * 40, i * 40, 40, 40)
+                if linha[x] == '#':
+                    pygame.draw.rect(TELA, (40, 90, 0), rect)
+                elif linha[x] == '.':
+                    pygame.draw.rect(TELA, (255, 255, 255), rect)
+                elif linha[x] == 'E':
+                    pygame.draw.rect(TELA, (0, 255, 0), rect)
+                elif linha[x] == 'S':
+                    pygame.draw.rect(TELA, (255, 0, 0), rect)
+
+            elif len((lab_string_inteiro)) ==19:
+                rect = pygame.Rect(x * 31, i * 31, 31, 31)
+                if linha[x] == '#':
+                    pygame.draw.rect(TELA, (40, 90, 0), rect)
+                elif linha[x] == '.':
+                    pygame.draw.rect(TELA, (255, 255, 255), rect)
+                elif linha[x] == 'E':
+                    pygame.draw.rect(TELA, (0, 255, 0), rect)
+                elif linha[x] == 'S':
+                    pygame.draw.rect(TELA, (255, 0, 0), rect)
+
+            elif len((lab_string_inteiro)) == 31:
+                rect = pygame.Rect(x * 21, i * 21, 21, 21)
+                if linha[x] == '#':
+                    pygame.draw.rect(TELA, (40, 90, 0), rect)
+                elif linha[x] == '.':
+                    pygame.draw.rect(TELA, (255, 255, 255), rect)
+                elif linha[x] == 'E':
+                    pygame.draw.rect(TELA, (0, 255, 0), rect)
+                elif linha[x] == 'S':
+                    pygame.draw.rect(TELA, (255, 0, 0), rect)
         i+=1
 
 

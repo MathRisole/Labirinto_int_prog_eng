@@ -73,7 +73,15 @@ def rodar_pronto(pos_x, tamanho_lab_x, pos_y, tamanho_lab_y, velocidade, TELA, l
 
     # Aqui desenha o mapa e o jogador
     GL.desenhar_mapa_pronto(lab_linhas, tamanho_celula, TELA)
-    rect_jogador = pygame.Rect(pos_x * tamanho_celula, pos_y * tamanho_celula, tamanho_celula, tamanho_celula)
+    if len(lab_linhas) == 9:
+        rect_jogador = pygame.Rect(pos_x * 40, pos_y * 40, 40, 40)
+    elif len(lab_linhas) == 19:
+            rect_jogador = pygame.Rect(pos_x * 31, pos_y * 31, 31, 31)
+    elif len(lab_linhas) == 31:
+        rect_jogador = pygame.Rect(pos_x * 21, pos_y * 21, 21, 21)
+
+
+    
     pygame.draw.rect(TELA, (66, 135, 245), rect_jogador)
 
     pygame.display.flip()

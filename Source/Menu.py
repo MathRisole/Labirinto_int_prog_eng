@@ -83,7 +83,7 @@ def facil(caminho_arquivo_jogadores, diretorio_base):
                     campanha(caminho_arquivo_jogadores, diretorio_base)
                 if FACIL_UM.checarPorMouse(FACIL_MOUSE_POS):
                     with open(diretorio_base/'Dados'/'fases'/'fase_01.txt') as arq_facil_1:
-                        MC.jogar_fase_pronta(1, 19, 1, 19, 1, TELA, arq_facil_1)
+                        MC.jogar_fase_pronta(1, 16, 1, 9, 1, TELA, arq_facil_1)
 
 
 
@@ -131,10 +131,10 @@ def medio(caminho_arquivo_jogadores, diretorio_base):
                     campanha(caminho_arquivo_jogadores, diretorio_base)
                 if MEDIO_UM.checarPorMouse(MEDIO_MOUSE_POS):
                     with open(diretorio_base/'Dados'/'fases'/'fase_02.txt') as arq_medio_1:
-                        MC.jogar_fase_pronta(1, 29, 1, 29, 1, TELA, arq_medio_1)
+                        MC.jogar_fase_pronta(1, 35, 1, 19, 1, TELA, arq_medio_1)
                 if MEDIO_DOIS.checarPorMouse(MEDIO_MOUSE_POS):
                     with open(diretorio_base/'Dados'/'fases'/'fase_03.txt') as arq_medio_2:
-                        MC.jogar_fase_pronta(1, 29, 1, 29, 1, TELA, arq_medio_2)
+                        MC.jogar_fase_pronta(1, 35, 1, 19, 1, TELA, arq_medio_2)
 
 
 
@@ -179,10 +179,10 @@ def dificil(caminho_arquivo_jogadores, diretorio_base):
                     campanha(caminho_arquivo_jogadores, diretorio_base)
                 if DIFICIL_UM.checarPorMouse(DIFICIL_MOUSE_POS):
                     with open(diretorio_base/'Dados'/'fases'/'fase_04.txt') as arq_dificil_1:
-                        MC.jogar_fase_pronta(1, 41, 1, 41, 1, TELA, arq_dificil_1)
+                        MC.jogar_fase_pronta(1, 59, 1, 31, 1, TELA, arq_dificil_1)
                 if DIFICIL_DOIS.checarPorMouse(DIFICIL_MOUSE_POS):
                     with open(diretorio_base/'Dados'/'fases'/'fase_05.txt') as arq_dificil_2:
-                        MC.jogar_fase_pronta(1, 41, 1, 41, 1, TELA, arq_dificil_2)
+                        MC.jogar_fase_pronta(1, 59, 1, 31, 1, TELA, arq_dificil_2)
 
 
         pg.display.update() # Modificado aqui
