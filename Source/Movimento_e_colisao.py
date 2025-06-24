@@ -90,6 +90,9 @@ def jogar_fase_pronta(pos_x, tamanho_lab_x, pos_y, tamanho_lab_y, velocidade, TE
     lab_linhas = lab_string_inteiro.splitlines()
 
     while rodando:
+        if pos_x == tamanho_lab_x - 2 and pos_y == tamanho_lab_y - 2:
+            break
+        print(pos_x,pos_y)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
