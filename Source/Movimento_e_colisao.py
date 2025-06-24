@@ -91,7 +91,9 @@ def jogar_fase_pronta(pos_x, tamanho_lab_x, pos_y, tamanho_lab_y, velocidade, TE
 
     while rodando:
         if pos_x == tamanho_lab_x - 2 and pos_y == tamanho_lab_y - 2:
+            #Chamar tela do Bruno de vencer
             break
+        #por aqui pause
         print(pos_x,pos_y)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

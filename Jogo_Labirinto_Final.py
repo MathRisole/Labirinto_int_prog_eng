@@ -7,4 +7,4 @@ base_dir = Path.cwd()
 
 
 Menu.main_menu(base_dir/'Dados'/'jogadores.txt', base_dir)
-#chama a função do menu principal
+#chama a função do menu principals
