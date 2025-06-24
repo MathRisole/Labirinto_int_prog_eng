@@ -335,8 +335,8 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
 
                         rodando_labirinto = True
                         while rodando_labirinto:
+                            #por aqui pause
                             TELA.fill((0, 0, 0))  # Fundo parede
-
                             tempo_atual = time.time()
                             if tempo_atual - ultimo_tempo >= 1:
                                 pontuacao -= 100

@@ -94,21 +94,10 @@ class Labirinto:
 
 
 def desenhar_mapa_pronto(lab_string_inteiro, tamanho_celula, TELA):
-    largura_lab = len(lab_string_inteiro[0])
-    altura_lab = len(lab_string_inteiro)
-    
-    # Calcular margens para centralizar o labirinto na tela
-    #margem_x = (TELA.get_width() - largura_lab * tamanho_celula) // 2
-    #margem_y = (TELA.get_height() - altura_lab * tamanho_celula) // 2
-
-    for i, linha in enumerate(lab_string_inteiro):
+    i=0
+    for linha in lab_string_inteiro:
         for x in range(len(linha)):
-            rect = pygame.Rect(
-                margem_x + x * tamanho_celula,
-                margem_y + i * tamanho_celula,
-                tamanho_celula,
-                tamanho_celula
-            )
+            rect = pygame.Rect(x * tamanho_celula, i * tamanho_celula, tamanho_celula, tamanho_celula)
             if linha[x] == '#':
                 pygame.draw.rect(TELA, (40, 90, 0), rect)
             elif linha[x] == '.':
@@ -117,9 +106,10 @@ def desenhar_mapa_pronto(lab_string_inteiro, tamanho_celula, TELA):
                 pygame.draw.rect(TELA, (0, 255, 0), rect)
             elif linha[x] == 'S':
                 pygame.draw.rect(TELA, (255, 0, 0), rect)
+        i+=1
 
 
 #pra chamar essa função:
-#lab = Labirinto(x, y) #lembra que o labirinto tem que ter largura e altura ímpares
-#lab.gerar_labirinto()
-#lab.rodar()
+lab = Labirinto(16, 9) 
+lab.gerar_labirinto()
+lab.salvar_em_arquivo("fase_01")
