@@ -325,7 +325,7 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
                         arq_jogadores_usavel.write(username + "\n")
 
                     pos_x, pos_y = 1, 1
-                    pontuacao = 10000
+                    pontuacao = 100000
                     tempo_inicio = time.time()
                     ultimo_tempo = tempo_inicio
                     clock = pg.time.Clock()
