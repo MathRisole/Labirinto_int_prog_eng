@@ -29,16 +29,16 @@ def rodar_aleatorio(pos_x, tamanho_lab_x, pos_y, tamanho_lab_y, velocidade, TELA
 
     
     # 3. Movimento discreto: mover 1 célula por vez (velocidade=1)
-    if teclas[pygame.K_LEFT]:
+    if teclas[pygame.K_a]:
         if pode_mover(pos_x - velocidade, tamanho_lab_x, pos_y, tamanho_lab_y, labirinto):
             novo_x = pos_x - velocidade
-    elif teclas[pygame.K_RIGHT]:
+    elif teclas[pygame.K_d]:
         if pode_mover(pos_x + velocidade, tamanho_lab_x, pos_y, tamanho_lab_y, labirinto):
             novo_x = pos_x + velocidade
-    elif teclas[pygame.K_UP]:
+    elif teclas[pygame.K_w]:
         if pode_mover(pos_x, tamanho_lab_x, pos_y - velocidade, tamanho_lab_y, labirinto):
             novo_y = pos_y - velocidade
-    elif teclas[pygame.K_DOWN]:
+    elif teclas[pygame.K_s]:
         if pode_mover(pos_x, tamanho_lab_x, pos_y + velocidade, tamanho_lab_y, labirinto):
             novo_y = pos_y + velocidade
     
