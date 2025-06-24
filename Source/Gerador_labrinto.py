@@ -54,6 +54,10 @@ class Labirinto:
             for x in range(self.largura):
                 if self.mapa[y][x] == '#':
                     cor = (0, 180, 0)  # parede (preto)
+                elif self.mapa[y][x] == 'S':
+                    cor = (255, 0, 0)
+                elif self.mapa[y][x] == 'E':
+                    cor = (0,255,0)
                 else:
                     cor = (255, 255, 255)  # chão (branco)
 

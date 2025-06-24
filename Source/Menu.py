@@ -322,7 +322,7 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
                 if ALEATORIO_CRIAR.checarPorMouse(ALEATORIO_MOUSE_POS):
                     username = pegar_nome_jogador(caminho_arquivo_jogadores, diretorio_base)
                     with open(caminho_arquivo_jogadores, "a", encoding="utf-8") as arq_jogadores_usavel:
-                        arq_jogadores_usavel.write(username + "\n")
+                        arq_jogadores_usavel.write(username + " ")
 
                         pos_x, pos_y = 1, 1
                         pontuacao = 100000
@@ -348,7 +348,7 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
                                     sys.exit()
                                 if event_lab.type == pg.KEYDOWN:
                                     if event_lab.key == pg.K_ESCAPE:
-                                        rodando_labirinto = False
+                                        rodando_labirinto = False #lugar do pause
 
                             teclas = pg.key.get_pressed()
                             novo_x, novo_y = pos_x, pos_y
@@ -369,6 +369,11 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
                             if (novo_x != pos_x) or (novo_y != pos_y):
                                 pontuacao -= 50
                             pos_x, pos_y = novo_x, novo_y
+                            if lab_aleatorio.mapa[novo_y][novo_x] == lab_aleatorio.mapa[lab_aleatorio.altura - 2][lab_aleatorio.largura - 2]:
+                                arq_jogadores_usavel.write(f"{pontuacao}\n")
+                                pg.quit()
+                                sys.exit()
+                                #aqui tela fim
 
                             # Desenhar labirinto centralizado
                             lab_aleatorio.desenhar_mapa(TELA, margem_x, margem_y)
@@ -389,7 +394,7 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
 
                             pg.display.update()
                             clock.tick(10)
-                            
+
 
         pg.display.update()
 
