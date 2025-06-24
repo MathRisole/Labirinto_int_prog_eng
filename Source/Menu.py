@@ -295,13 +295,9 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
         ALEATORIO_RECT = ALEATORIO_TEXT.get_rect(center=(640, 120))
         TELA.blit(ALEATORIO_TEXT, ALEATORIO_RECT)
 
-        ALEATORIO_SELECIONAR = Botao(image=None, pos=(640, 330),
-                                     text_input="Selecionar usuário existente", font=get_font(43), base_color="White", hovering_color="blue")
-        ALEATORIO_SELECIONAR.trocarCor(ALEATORIO_MOUSE_POS)
-        ALEATORIO_SELECIONAR.atualizar(TELA)
 
-        ALEATORIO_CRIAR = Botao(image=None, pos=(640, 440),
-                                text_input="Criar usuário", font=get_font(43), base_color="White", hovering_color="Red")
+        ALEATORIO_CRIAR = Botao(image=None, pos=(640, 360),
+                                text_input="Criar usuário", font=get_font(47), base_color="White", hovering_color="Red")
         ALEATORIO_CRIAR.trocarCor(ALEATORIO_MOUSE_POS)
         ALEATORIO_CRIAR.atualizar(TELA)
 
@@ -348,7 +344,7 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
                                     sys.exit()
                                 if event_lab.type == pg.KEYDOWN:
                                     if event_lab.key == pg.K_ESCAPE:
-                                        rodando_labirinto = False #lugar do pause
+                                        rodando_labirinto = False 
 
                             teclas = pg.key.get_pressed()
                             novo_x, novo_y = pos_x, pos_y
@@ -371,8 +367,9 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
                             pos_x, pos_y = novo_x, novo_y
                             if lab_aleatorio.mapa[novo_y][novo_x] == lab_aleatorio.mapa[lab_aleatorio.altura - 2][lab_aleatorio.largura - 2]:
                                 arq_jogadores_usavel.write(f"{pontuacao}\n")
-                                pg.quit()
-                                sys.exit()
+
+                                tela_acabar_fase_a(caminho_arquivo_jogadores, diretorio_base, pontuacao, username)
+                                rodando_labirinto = False
                                 #aqui tela fim
 
                             # Desenhar labirinto centralizado
@@ -575,35 +572,30 @@ def pausar(caminho_arquivo_jogadores, diretorio_base):
 
 
 
-def tela_acabar_fase(caminho_arquivo_jogadores, diretorio_base): 
+def tela_acabar_fase_a(caminho_arquivo_jogadores, diretorio_base, pontuacao, username): 
     while True:
         ACABAR_MOUSE_POS = pg.mouse.get_pos() 
 
         TELA.fill("gray") # Cor de fundo
 
-        ACABAR_TEXT = get_font(45).render("PARABÉNS, A FASE FOI FINALIZADA!", True, "White")
-        ACABAR_RECT = ACABAR_TEXT.get_rect(center=(640, 130))
+        ACABAR_TEXT = get_font(32).render(f"PARABÉNS {username}, a fase foi FINALIZADA!", True, "Black")
+        ACABAR_RECT = ACABAR_TEXT.get_rect(center=(640, 110))
         TELA.blit(ACABAR_TEXT, ACABAR_RECT)
 
- #       SCORE_TEXT = get_font(30).render(f"VOCÊ TEVE UM SCORE DE {}, COM UM TEMPO DE {} E {} PASSOS.", True, "White")
- #       SCORE_RECT = SCORE_TEXT.get_rect(center=(640, 170))
-  #      TELA.blit(SCORE_TEXT, SCORE_RECT)
+        SCORE_TEXT = get_font(40).render(f"VOCÊ TEVE UM SCORE DE {pontuacao}.", True, "Black")
+        SCORE_RECT = SCORE_TEXT.get_rect(center=(640, 220))
+        TELA.blit(SCORE_TEXT, SCORE_RECT)
 
 
         
-        ACABAR_OUTRA_FASE = Botao(image=None, pos=(640, 280),
-                                     text_input="RETOMAR", font=get_font(45), base_color="WHITE", hovering_color="Green")
+        ACABAR_OUTRA_FASE = Botao(image=None, pos=(640, 380),
+                                     text_input="Jogar outra fase", font=get_font(60), base_color="Black", hovering_color="Green")
         ACABAR_OUTRA_FASE.trocarCor(ACABAR_MOUSE_POS)
         ACABAR_OUTRA_FASE.atualizar(TELA)
 
-        ACABAR_REPETIR = Botao(image=None, pos=(640, 340), 
-                                     text_input="REINICIAR FASE", font=get_font(45), base_color="WHITE", hovering_color="Green")
-        ACABAR_REPETIR.trocarCor(ACABAR_MOUSE_POS)
-        ACABAR_REPETIR.atualizar(TELA)
 
-
-        ACABAR_SAIR_MENU = Botao(image=None, pos=(640, 500), 
-                                     text_input="VOLTAR AO MENU", font=get_font(45), base_color="WHITE", hovering_color="Red")
+        ACABAR_SAIR_MENU = Botao(image=None, pos=(640, 600), 
+                                     text_input="VOLTAR AO MENU", font=get_font(45), base_color="Black", hovering_color="Red")
         
         ACABAR_SAIR_MENU.trocarCor(ACABAR_MOUSE_POS)
         ACABAR_SAIR_MENU.atualizar(TELA)
@@ -615,11 +607,8 @@ def tela_acabar_fase(caminho_arquivo_jogadores, diretorio_base):
             if event.type == pg.MOUSEBUTTONDOWN:
                 if ACABAR_OUTRA_FASE.checarPorMouse(ACABAR_MOUSE_POS):
                    play(caminho_arquivo_jogadores, diretorio_base)
-                
-           # if ACABAR_REPETIR.checarPorMouse(ACABAR_MOUSE_POS):
-                #precisa ser implementado ainda
 
-            if ACABAR_SAIR_MENU.checarPorMouse(ACABAR_MOUSE_POS):
+                if ACABAR_SAIR_MENU.checarPorMouse(ACABAR_MOUSE_POS):
                     main_menu(caminho_arquivo_jogadores, diretorio_base)
                     
 
