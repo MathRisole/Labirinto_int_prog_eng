@@ -282,11 +282,14 @@ def pegar_nome_jogador(caminho_arquivo_jogadores, diretorio_base):
 
 
 def aleatorio(caminho_arquivo_jogadores, diretorio_base):
+    import time  # garanta que está importado no topo do arquivo também
     while True:
         lab_aleatorio = GL.Labirinto(55, 31)
+        lab_aleatorio.gerar_labirinto()  # <<<<<<<<<<<<<<<<<<<<<<
+
         ALEATORIO_MOUSE_POS = pg.mouse.get_pos()
 
-        TELA.fill((0, 0, 0))  # Cor de fundo igual a cor da parede (exemplo: preto)
+        TELA.fill((0, 0, 0))  # Fundo igual cor da parede
 
         ALEATORIO_TEXT = get_font(45).render("Modo Aleatório", True, "White")
         ALEATORIO_RECT = ALEATORIO_TEXT.get_rect(center=(640, 120))
@@ -327,25 +330,24 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
                     ultimo_tempo = tempo_inicio
                     clock = pg.time.Clock()
 
-                    # --- Cálculo para centralizar o labirinto ---
                     margem_x = (TELA.get_width() - lab_aleatorio.largura * lab_aleatorio.tamanho_celula) // 2
                     margem_y = (TELA.get_height() - lab_aleatorio.altura * lab_aleatorio.tamanho_celula) // 2
 
                     rodando_labirinto = True
                     while rodando_labirinto:
-                        TELA.fill((0, 0, 0))  # Fundo da tela da mesma cor da parede (exemplo: preto)
+                        TELA.fill((0, 0, 0))  # Fundo parede
 
                         tempo_atual = time.time()
                         if tempo_atual - ultimo_tempo >= 1:
                             pontuacao -= 100
                             ultimo_tempo = tempo_atual
 
-                        for event in pg.event.get():
-                            if event.type == pg.QUIT:
+                        for event_lab in pg.event.get():
+                            if event_lab.type == pg.QUIT:
                                 pg.quit()
                                 sys.exit()
-                            if event.type == pg.KEYDOWN:
-                                if event.key == pg.K_ESCAPE:
+                            if event_lab.type == pg.KEYDOWN:
+                                if event_lab.key == pg.K_ESCAPE:
                                     rodando_labirinto = False
 
                         teclas = pg.key.get_pressed()
@@ -368,10 +370,10 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
                             pontuacao -= 50
                         pos_x, pos_y = novo_x, novo_y
 
-                        # --- Desenhar o labirinto centralizado ---
+                        # Desenhar labirinto centralizado
                         lab_aleatorio.desenhar_mapa(TELA, margem_x, margem_y)
 
-                        # --- Desenhar o jogador também centralizado ---
+                        # Desenhar jogador centralizado
                         rect_jogador = pg.Rect(
                             margem_x + pos_x * lab_aleatorio.tamanho_celula,
                             margem_y + pos_y * lab_aleatorio.tamanho_celula,
@@ -380,7 +382,7 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
                         )
                         pg.draw.rect(TELA, (66, 135, 245), rect_jogador)
 
-                        # --- Exibir pontuação ---
+                        # Exibir pontuação
                         fonte = pg.font.SysFont(None, 36)
                         texto_pontuacao = fonte.render(f"Pontos: {max(pontuacao, 0)}", True, (255, 255, 255))
                         TELA.blit(texto_pontuacao, (10, 10))
@@ -389,6 +391,7 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
                         clock.tick(10)
 
         pg.display.update()
+
 
 
 

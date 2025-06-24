@@ -40,7 +40,6 @@ class Labirinto:
         # Começo da escavação
         self.mapa[1][1] = '.'
         self.escavar(1, 1)
-
         # Criar entrada
         for i in range(self.largura):
             if self.mapa[1][i] == '.':
@@ -53,7 +52,11 @@ class Labirinto:
     def desenhar_mapa(self, TELA, margem_x=0, margem_y=0):
         for y in range(self.altura):
             for x in range(self.largura):
-                cor = (0, 0, 0) if self.mapa[y][x] == '#' else (255, 255, 255)
+                if self.mapa[y][x] == '#':
+                    cor = (0, 180, 0)  # parede (preto)
+                else:
+                    cor = (255, 255, 255)  # chão (branco)
+
                 pygame.draw.rect(
                     TELA,
                     cor,

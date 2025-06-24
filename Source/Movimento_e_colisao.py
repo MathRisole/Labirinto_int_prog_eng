@@ -82,7 +82,6 @@ def rodar_pronto(pos_x, tamanho_lab_x, pos_y, tamanho_lab_y, velocidade, TELA, l
 
 
 def jogar_fase_pronta(pos_x, tamanho_lab_x, pos_y, tamanho_lab_y, velocidade, TELA, caminho_arquivo_fase):
-    import pygame
     clock = pygame.time.Clock()
     rodando = True
 
