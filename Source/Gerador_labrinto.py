@@ -53,11 +53,11 @@ class Labirinto:
         for y in range(self.altura):
             for x in range(self.largura):
                 if self.mapa[y][x] == '#':
-                    cor = (0, 180, 0)  # parede (preto)
-                elif self.mapa[y][x] == 'S':
-                    cor = (255, 0, 0)
-                elif self.mapa[y][x] == 'E':
-                    cor = (0,255,0)
+                    cor = (0, 180, 0)  # parede 
+                elif self.mapa[y][x] =="E":
+                    cor = (0, 255, 0)
+                elif self.mapa[y][x] =="S":
+                    cor = (0, 0, 255)
                 else:
                     cor = (255, 255, 255)  # chão (branco)
 
@@ -110,6 +110,6 @@ def desenhar_mapa_pronto(lab_string_inteiro, tamanho_celula, TELA):
 
 
 #pra chamar essa função:
-lab = Labirinto(16, 9) 
-lab.gerar_labirinto()
-lab.salvar_em_arquivo("fase_01")
+#lab = Labirinto(35,19) 
+#lab.gerar_labirinto()
+#lab.salvar_em_arquivo("fase_03.txt")
