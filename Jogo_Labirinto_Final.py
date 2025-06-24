@@ -1,5 +1,3 @@
-from Source import Gerador_labrinto as GL
-from Source import Movimento_e_colisao as MC
 from Source import Menu
 #importam os módulos dos arquivos necessários
 

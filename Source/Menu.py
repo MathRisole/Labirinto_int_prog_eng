@@ -324,71 +324,72 @@ def aleatorio(caminho_arquivo_jogadores, diretorio_base):
                     with open(caminho_arquivo_jogadores, "a", encoding="utf-8") as arq_jogadores_usavel:
                         arq_jogadores_usavel.write(username + "\n")
 
-                    pos_x, pos_y = 1, 1
-                    pontuacao = 100000
-                    tempo_inicio = time.time()
-                    ultimo_tempo = tempo_inicio
-                    clock = pg.time.Clock()
+                        pos_x, pos_y = 1, 1
+                        pontuacao = 100000
+                        tempo_inicio = time.time()
+                        ultimo_tempo = tempo_inicio
+                        clock = pg.time.Clock()
 
-                    margem_x = (TELA.get_width() - lab_aleatorio.largura * lab_aleatorio.tamanho_celula) // 2
-                    margem_y = (TELA.get_height() - lab_aleatorio.altura * lab_aleatorio.tamanho_celula) // 2
+                        margem_x = (TELA.get_width() - lab_aleatorio.largura * lab_aleatorio.tamanho_celula) // 2
+                        margem_y = (TELA.get_height() - lab_aleatorio.altura * lab_aleatorio.tamanho_celula) // 2
 
-                    rodando_labirinto = True
-                    while rodando_labirinto:
-                        TELA.fill((0, 0, 0))  # Fundo parede
+                        rodando_labirinto = True
+                        while rodando_labirinto:
+                            TELA.fill((0, 0, 0))  # Fundo parede
 
-                        tempo_atual = time.time()
-                        if tempo_atual - ultimo_tempo >= 1:
-                            pontuacao -= 100
-                            ultimo_tempo = tempo_atual
+                            tempo_atual = time.time()
+                            if tempo_atual - ultimo_tempo >= 1:
+                                pontuacao -= 100
+                                ultimo_tempo = tempo_atual
 
-                        for event_lab in pg.event.get():
-                            if event_lab.type == pg.QUIT:
-                                pg.quit()
-                                sys.exit()
-                            if event_lab.type == pg.KEYDOWN:
-                                if event_lab.key == pg.K_ESCAPE:
-                                    rodando_labirinto = False
+                            for event_lab in pg.event.get():
+                                if event_lab.type == pg.QUIT:
+                                    pg.quit()
+                                    sys.exit()
+                                if event_lab.type == pg.KEYDOWN:
+                                    if event_lab.key == pg.K_ESCAPE:
+                                        rodando_labirinto = False
 
-                        teclas = pg.key.get_pressed()
-                        novo_x, novo_y = pos_x, pos_y
+                            teclas = pg.key.get_pressed()
+                            novo_x, novo_y = pos_x, pos_y
 
-                        if teclas[pg.K_LEFT]:
-                            if MC.pode_mover(pos_x - 1, lab_aleatorio.largura, pos_y, lab_aleatorio.altura, lab_aleatorio):
-                                novo_x = pos_x - 1
-                        elif teclas[pg.K_RIGHT]:
-                            if MC.pode_mover(pos_x + 1, lab_aleatorio.largura, pos_y, lab_aleatorio.altura, lab_aleatorio):
-                                novo_x = pos_x + 1
-                        elif teclas[pg.K_UP]:
-                            if MC.pode_mover(pos_x, lab_aleatorio.largura, pos_y - 1, lab_aleatorio.altura, lab_aleatorio):
-                                novo_y = pos_y - 1
-                        elif teclas[pg.K_DOWN]:
-                            if MC.pode_mover(pos_x, lab_aleatorio.largura, pos_y + 1, lab_aleatorio.altura, lab_aleatorio):
-                                novo_y = pos_y + 1
+                            if teclas[pg.K_a]:
+                                if MC.pode_mover(pos_x - 1, lab_aleatorio.largura, pos_y, lab_aleatorio.altura, lab_aleatorio):
+                                    novo_x = pos_x - 1
+                            elif teclas[pg.K_d]:
+                                if MC.pode_mover(pos_x + 1, lab_aleatorio.largura, pos_y, lab_aleatorio.altura, lab_aleatorio):
+                                    novo_x = pos_x + 1
+                            elif teclas[pg.K_w]:
+                                if MC.pode_mover(pos_x, lab_aleatorio.largura, pos_y - 1, lab_aleatorio.altura, lab_aleatorio):
+                                    novo_y = pos_y - 1
+                            elif teclas[pg.K_s]:
+                                if MC.pode_mover(pos_x, lab_aleatorio.largura, pos_y + 1, lab_aleatorio.altura, lab_aleatorio):
+                                    novo_y = pos_y + 1
 
-                        if (novo_x != pos_x) or (novo_y != pos_y):
-                            pontuacao -= 50
-                        pos_x, pos_y = novo_x, novo_y
+                            if (novo_x != pos_x) or (novo_y != pos_y):
+                                pontuacao -= 50
+                            pos_x, pos_y = novo_x, novo_y
 
-                        # Desenhar labirinto centralizado
-                        lab_aleatorio.desenhar_mapa(TELA, margem_x, margem_y)
+                            # Desenhar labirinto centralizado
+                            lab_aleatorio.desenhar_mapa(TELA, margem_x, margem_y)
 
-                        # Desenhar jogador centralizado
-                        rect_jogador = pg.Rect(
-                            margem_x + pos_x * lab_aleatorio.tamanho_celula,
-                            margem_y + pos_y * lab_aleatorio.tamanho_celula,
-                            lab_aleatorio.tamanho_celula,
-                            lab_aleatorio.tamanho_celula
-                        )
-                        pg.draw.rect(TELA, (66, 135, 245), rect_jogador)
+                            # Desenhar jogador centralizado
+                            rect_jogador = pg.Rect(
+                                margem_x + pos_x * lab_aleatorio.tamanho_celula,
+                                margem_y + pos_y * lab_aleatorio.tamanho_celula,
+                                lab_aleatorio.tamanho_celula,
+                                lab_aleatorio.tamanho_celula
+                            )
+                            pg.draw.rect(TELA, (66, 135, 245), rect_jogador)
 
-                        # Exibir pontuação
-                        fonte = pg.font.SysFont(None, 36)
-                        texto_pontuacao = fonte.render(f"Pontos: {max(pontuacao, 0)}", True, (255, 255, 255))
-                        TELA.blit(texto_pontuacao, (10, 10))
+                            # Exibir pontuação
+                            fonte = pg.font.SysFont(None, 36)
+                            texto_pontuacao = fonte.render(f"Pontos: {max(pontuacao, 0)}", True, (255, 255, 255))
+                            TELA.blit(texto_pontuacao, (10, 10))
 
-                        pg.display.update()
-                        clock.tick(10)
+                            pg.display.update()
+                            clock.tick(10)
+                            
 
         pg.display.update()
 
