@@ -6,7 +6,7 @@ import time
 
 diretorio_base = Path.cwd()
 
-#criar a classe de um botão
+
 class Botao():
     def __init__(self, image, pos, text_input, font, base_color, hovering_color):
         self.image = image
@@ -40,12 +40,12 @@ class Botao():
 pg.init()
 
 TELA = pg.display.set_mode((1280, 720))
-pg.display.set_caption("Labirinto") # Modificado aqui
+pg.display.set_caption("Labirinto") 
 
-BG = pg.image.load("Dados/imagens_fontes/Background.png") # Modificado aqui
+BG = pg.image.load("Dados/imagens_fontes/Background.png") 
 
-def get_font(size): # Returns Press-Start-2P in the desired size
-    return pg.font.Font("Dados/imagens_fontes/font.ttf", size) # Modificado aqui
+def get_font(size): # Retorna Press-Start-2P no tamanho que quisermos
+    return pg.font.Font("Dados/imagens_fontes/font.ttf", size) 
 
 
 
@@ -190,13 +190,13 @@ def dificil(caminho_arquivo_jogadores, diretorio_base):
                         tela_acabar_fase_c(caminho_arquivo_jogadores, diretorio_base)
 
 
-        pg.display.update() # Modificado aqui
+        pg.display.update()
 
 
 
 def campanha(caminho_arquivo_jogadores, diretorio_base):
     while True:
-        CAMPANHA_MOUSE_POS = pg.mouse.get_pos() # Modificado aqui
+        CAMPANHA_MOUSE_POS = pg.mouse.get_pos() 
 
         TELA.fill("white")
 
@@ -231,10 +231,10 @@ def campanha(caminho_arquivo_jogadores, diretorio_base):
 
         CAMPANHA_BACK.trocarCor(CAMPANHA_MOUSE_POS)
         CAMPANHA_BACK.atualizar(TELA)
-                            
-        for event in pg.event.get(): # Modificado aqui
-            if event.type == pg.QUIT: # Modificado aqui
-                pg.quit() # Modificado aqui
+                        
+        for event in pg.event.get(): 
+            if event.type == pg.QUIT: 
+                pg.quit()
                 sys.exit()
             if event.type == pg.MOUSEBUTTONDOWN: # Modificado aqui
                 if CAMPANHA_BACK.checarPorMouse(CAMPANHA_MOUSE_POS):
@@ -246,7 +246,7 @@ def campanha(caminho_arquivo_jogadores, diretorio_base):
                 if CAMPANHA_DIFICIL.checarPorMouse(CAMPANHA_MOUSE_POS):
                     dificil(caminho_arquivo_jogadores, diretorio_base)
 
-        pg.display.update() # Modificado aqui
+        pg.display.update() 
 
 
 
@@ -287,7 +287,7 @@ def pegar_nome_jogador(caminho_arquivo_jogadores, diretorio_base):
 
 
 def aleatorio(caminho_arquivo_jogadores, diretorio_base):
-    import time  # garanta que está importado no topo do arquivo também
+    import time  
     while True:
         lab_aleatorio = GL.Labirinto(55, 31)
         lab_aleatorio.gerar_labirinto()  # <<<<<<<<<<<<<<<<<<<<<<
@@ -530,50 +530,6 @@ def sair(caminho_arquivo_jogadores, diretorio_base):
 
 
 
-def pausar(caminho_arquivo_jogadores, diretorio_base): 
-    while True:
-        PAUSAR_MOUSE_POS = pg.mouse.get_pos() # Variável renomeada
-
-        TELA.fill("BLACK") # Cor de fundo
-
-        PAUSAR_TEXT = get_font(45).render("Jogo Pausado", True, "White")
-        PAUSAR_RECT = PAUSAR_TEXT.get_rect(center=(640, 130))
-        TELA.blit(PAUSAR_TEXT, PAUSAR_RECT)
-
-        
-        PAUSAR_RETOMAR = Botao(image=None, pos=(640, 280),
-                                     text_input="RETOMAR", font=get_font(45), base_color="WHITE", hovering_color="Green")
-        PAUSAR_RETOMAR.trocarCor(PAUSAR_MOUSE_POS)
-        PAUSAR_RETOMAR.atualizar(TELA)
-
-        PAUSAR_REINICIAR = Botao(image=None, pos=(640, 340), 
-                                     text_input="REINICIAR FASE", font=get_font(45), base_color="WHITE", hovering_color="Green")
-        PAUSAR_REINICIAR.trocarCor(PAUSAR_MOUSE_POS)
-        PAUSAR_REINICIAR.atualizar(TELA)
-
-
-        PAUSAR_SAIR_MENU = Botao(image=None, pos=(640, 500), 
-                                     text_input="VOLTAR AO MENU", font=get_font(45), base_color="WHITE", hovering_color="Red")
-        
-        PAUSAR_SAIR_MENU.trocarCor(PAUSAR_MOUSE_POS)
-        PAUSAR_SAIR_MENU.atualizar(TELA)
-
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                pg.quit()
-                sys.exit()
-            if event.type == pg.MOUSEBUTTONDOWN:
-                #if PAUSAR_RETOMAR.checarPorMouse(PAUSAR_MOUSE_POS):
-              #      implementar retomar
-                
-           #    if PAUSAR_REINICIAR.checarPorMouse(PAUSAR_MOUSE_POS):
-                #precisa ser implementado ainda
-
-                if PAUSAR_SAIR_MENU.checarPorMouse(PAUSAR_MOUSE_POS):
-                    main_menu(caminho_arquivo_jogadores, diretorio_base)
-                    
-
-        pg.display.update()
 
 
 
