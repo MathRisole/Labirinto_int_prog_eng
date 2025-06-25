@@ -84,6 +84,7 @@ def facil(caminho_arquivo_jogadores, diretorio_base):
                 if FACIL_UM.checarPorMouse(FACIL_MOUSE_POS):
                     with open(diretorio_base/'Dados'/'fases'/'fase_01.txt') as arq_facil_1:
                         MC.jogar_fase_pronta(1, 16, 1, 9, 1, TELA, arq_facil_1)
+                        tela_acabar_fase_c(caminho_arquivo_jogadores, diretorio_base)
 
 
 
@@ -132,9 +133,11 @@ def medio(caminho_arquivo_jogadores, diretorio_base):
                 if MEDIO_UM.checarPorMouse(MEDIO_MOUSE_POS):
                     with open(diretorio_base/'Dados'/'fases'/'fase_02.txt') as arq_medio_1:
                         MC.jogar_fase_pronta(1, 35, 1, 19, 1, TELA, arq_medio_1)
+                        tela_acabar_fase_c(caminho_arquivo_jogadores, diretorio_base)
                 if MEDIO_DOIS.checarPorMouse(MEDIO_MOUSE_POS):
                     with open(diretorio_base/'Dados'/'fases'/'fase_03.txt') as arq_medio_2:
                         MC.jogar_fase_pronta(1, 35, 1, 19, 1, TELA, arq_medio_2)
+                        tela_acabar_fase_c(caminho_arquivo_jogadores, diretorio_base)
 
 
 
@@ -180,9 +183,11 @@ def dificil(caminho_arquivo_jogadores, diretorio_base):
                 if DIFICIL_UM.checarPorMouse(DIFICIL_MOUSE_POS):
                     with open(diretorio_base/'Dados'/'fases'/'fase_04.txt') as arq_dificil_1:
                         MC.jogar_fase_pronta(1, 59, 1, 31, 1, TELA, arq_dificil_1)
+                        tela_acabar_fase_c(caminho_arquivo_jogadores, diretorio_base)
                 if DIFICIL_DOIS.checarPorMouse(DIFICIL_MOUSE_POS):
                     with open(diretorio_base/'Dados'/'fases'/'fase_05.txt') as arq_dificil_2:
                         MC.jogar_fase_pronta(1, 59, 1, 31, 1, TELA, arq_dificil_2)
+                        tela_acabar_fase_c(caminho_arquivo_jogadores, diretorio_base)
 
 
         pg.display.update() # Modificado aqui
@@ -613,6 +618,44 @@ def tela_acabar_fase_a(caminho_arquivo_jogadores, diretorio_base, pontuacao, use
                     
 
         pg.display.update()
+
+def tela_acabar_fase_c(caminho_arquivo_jogadores, diretorio_base): 
+    while True:
+        ACABARC_MOUSE_POS = pg.mouse.get_pos() 
+
+        TELA.fill("gray") # Cor de fundo
+
+        ACABARC_TEXT = get_font(32).render(f"PARABÉNS, a fase foi CONCLUÍDA!", True, "Black")
+        ACABARC_RECT = ACABARC_TEXT.get_rect(center=(640, 110))
+        TELA.blit(ACABARC_TEXT, ACABARC_RECT)
+
+
+        ACABARC_OUTRA_FASE = Botao(image=None, pos=(640, 380),
+                                     text_input="Jogar outra fase", font=get_font(60), base_color="Black", hovering_color="Green")
+        ACABARC_OUTRA_FASE.trocarCor(ACABARC_MOUSE_POS)
+        ACABARC_OUTRA_FASE.atualizar(TELA)
+
+
+        ACABARC_SAIR_MENU = Botao(image=None, pos=(640, 600), 
+                                     text_input="VOLTAR AO MENU", font=get_font(45), base_color="Black", hovering_color="Red")
+        
+        ACABARC_SAIR_MENU.trocarCor(ACABARC_MOUSE_POS)
+        ACABARC_SAIR_MENU.atualizar(TELA)
+
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+                sys.exit()
+            if event.type == pg.MOUSEBUTTONDOWN:
+                if ACABARC_OUTRA_FASE.checarPorMouse(ACABARC_MOUSE_POS):
+                   play(caminho_arquivo_jogadores, diretorio_base)
+
+                if ACABARC_SAIR_MENU.checarPorMouse(ACABARC_MOUSE_POS):
+                    main_menu(caminho_arquivo_jogadores, diretorio_base)
+                    
+
+        pg.display.update()
+
 
 
 
